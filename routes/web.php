@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ActController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ActController::class, 'index'])->name('index');
+Route::get('/{id}/show', [ActController::class, 'show'])->name('show');
+Route::get('/{id}/word-export', [ActController::class, 'wordExport'])->name('word.export');
+
+//Route::post('download/docx',[ReportController::class, 'downloadDocx'])->name('download.docx');

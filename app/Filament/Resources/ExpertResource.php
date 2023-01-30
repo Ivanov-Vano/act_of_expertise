@@ -23,7 +23,6 @@ class ExpertResource extends Resource
 
     protected static ?string $pluralModelLabel = 'эксперты';
 
-    protected static ?string $recordSurnameAttribute = 'Фамилия';
 
     public static function form(Form $form): Form
     {

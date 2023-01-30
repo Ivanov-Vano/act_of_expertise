@@ -2,21 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Expert extends Model
+class Act extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable =[
-        'surname',
+        'number',
         'name',
         'patronymic',
     ];
-    public function acts()
+    public function expert()
     {
-        return $this->hasMany(Act::class);
+        return $this->belongsTo(Expert::class);
     }
 }
