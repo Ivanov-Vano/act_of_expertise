@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ActResource\Pages;
 use App\Filament\Resources\ActResource\RelationManagers;
 use App\Models\Act;
+use App\Models\Expert;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -12,6 +13,10 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
 
 class ActResource extends Resource
 {
@@ -27,14 +32,15 @@ class ActResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('expert_id')
+                Select::make('expert_id')
+                    ->relationship('expert', 'surname')
                     ->required(),
-                Forms\Components\TextInput::make('number')
+                TextInput::make('number')
                     ->required()
                     ->maxLength(255)
                     ->autofocus()
                     ->label('Номер акта'),
-                Forms\Components\DatePicker::make('date')
+                DatePicker::make('date')
                     ->required()
                     ->label('дата составления акта'),
             ]);
@@ -44,8 +50,9 @@ class ActResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('expert_id'),
-                Tables\Columns\TextColumn::make('number')->sortable()->label('Номер'),
+                TextColumn::make('expert.surname')->label('Эксперт'),
+                TextColumn::make('number')->sortable()->label('Номер')
+                ->searchable(),
                 Tables\Columns\TextColumn::make('date')
                     ->date()->sortable()->label('Дата составления'),
                 Tables\Columns\TextColumn::make('created_at')

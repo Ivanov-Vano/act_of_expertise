@@ -12,8 +12,7 @@ class Act extends Model
 
     protected $fillable =[
         'number',
-        'name',
-        'patronymic',
+        'date',
     ];
     public function expert()
     {
