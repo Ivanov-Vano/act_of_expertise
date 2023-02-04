@@ -14,9 +14,14 @@ class Expert extends Model
         'surname',
         'name',
         'patronymic',
+        'sign_path'
     ];
     public function acts()
     {
         return $this->hasMany(Act::class);
+    }
+    public function getFio()
+    {
+        return $this->surname.' '.mb_substr($this->name, 0, 1).'. '.mb_substr($this->patronymic, 0, 1).'.';;
     }
 }

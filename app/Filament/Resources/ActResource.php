@@ -33,8 +33,9 @@ class ActResource extends Resource
         return $form
             ->schema([
                 Select::make('expert_id')
-                    ->relationship('expert', 'surname')
-                    ->required(),
+                    ->relationship('expert', 'getFio')
+                    ->required()
+                    ->label('Эксперт'),
                 TextInput::make('number')
                     ->required()
                     ->maxLength(255)

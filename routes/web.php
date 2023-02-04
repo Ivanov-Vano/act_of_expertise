@@ -14,7 +14,7 @@ use App\Http\Controllers\ActController;
 |
 */
 
-Route::get('/', [ActController::class, 'index'])->name('index');
+Route::get('/prints', [ActController::class, 'index'])->name('index');
 Route::get('/{id}/show', [ActController::class, 'show'])->name('show');
 Route::get('/{id}/word-export', [ActController::class, 'wordExport'])->name('word.export');
 

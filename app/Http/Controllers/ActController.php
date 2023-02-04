@@ -52,6 +52,7 @@ class ActController extends Controller
     public function show($id)
     {
         $act = Act::findOrFail($id);
+
         return view('show', compact('act'));
     }
 
@@ -98,12 +99,13 @@ class ActController extends Controller
     public function wordExport($id)
     {
         $act = Act::findOrFail($id);
-        $myFio = $act->expert->surname.' '.mb_substr($act->expert->name, 0, 1).'. '.mb_substr($act->expert->patronymic, 0, 1).'.';
+        $myFio = $act->expert->getFio();
         $myDateTime = date_create_from_format('Y-m-d', $act->date);
         $templateProcessor = new TemplateProcessor('word-template/act_template.docx');
         $templateProcessor->setValue('number', $act->number);
         $templateProcessor->setValue('expert', $myFio);
         $templateProcessor->setValue('date', $myDateTime->format('d.m.Y'));
+        $templateProcessor->setImageValue('sign', 'storage/'.$act->expert->sign_path);
         $fileName = $act->id;
         $templateProcessor->saveAs($fileName.'.docx');
 

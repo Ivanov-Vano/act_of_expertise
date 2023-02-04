@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ExpertSeeder::class,
             ActSeeder::class,
+            CountrySeeder::class,
+            OrganizationSeeder::class,
         ]);
     }
 }

@@ -6,6 +6,8 @@ use App\Filament\Resources\ExpertResource\Pages;
 use App\Filament\Resources\ExpertResource\RelationManagers;
 use App\Models\Expert;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -28,16 +30,18 @@ class ExpertResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('surname')
+                TextInput::make('surname')
                     ->required()
                     ->maxLength(255)
                     ->autofocus()
                     ->label('Фамилия'),
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('patronymic')
+                TextInput::make('patronymic')
                     ->maxLength(255),
+                FileUpload::make('sign_path')
+                    ->label('Подпись'),
             ]);
     }
 
