@@ -37,8 +37,10 @@ class ExpertResource extends Resource
                     ->label('Фамилия'),
                 TextInput::make('name')
                     ->required()
+                    ->label('Имя')
                     ->maxLength(255),
                 TextInput::make('patronymic')
+                    ->label('Отчество')
                     ->maxLength(255),
                 FileUpload::make('sign_path')
                     ->label('Подпись'),

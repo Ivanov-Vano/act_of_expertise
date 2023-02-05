@@ -22,9 +22,12 @@ class DatabaseSeeder extends Seeder
          ]);*/
         $this->call([
             ExpertSeeder::class,
-            ActSeeder::class,
+            TypeActSeeder::class,
             CountrySeeder::class,
             OrganizationSeeder::class,
+            ActSeeder::class,
+            HsCodeSeeder::class,
+            ProductSeeder::class,
         ]);
     }
 }

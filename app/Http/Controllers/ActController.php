@@ -99,14 +99,30 @@ class ActController extends Controller
     public function wordExport($id)
     {
         $act = Act::findOrFail($id);
+        $products = $act->products;
         $myFio = $act->expert->getFio();
         $myDateTime = date_create_from_format('Y-m-d', $act->date);
         $templateProcessor = new TemplateProcessor('word-template/act_template.docx');
+        $templateProcessor->setValue('type', $act->type->short_name);
+
         $templateProcessor->setValue('number', $act->number);
         $templateProcessor->setValue('expert', $myFio);
         $templateProcessor->setValue('date', $myDateTime->format('d.m.Y'));
+        $templateProcessor->setValue('reason', $act->reason);
+
+        $templateProcessor->setValue('customer_name', $act->customer->short_name);
+        $templateProcessor->setValue('customer_inn', $act->customer->inn);
+        $templateProcessor->setValue('customer_adress', $act->customer->address);
+
+        foreach ($products as $product)
+        {
+            $templateProcessor->setValue('product_name', $product->name);
+            $templateProcessor->setValue('product_number', $product->number);
+            $templateProcessor->setValue('product_code', $product->hscode->code);
+        }
+
         $templateProcessor->setImageValue('sign', 'storage/'.$act->expert->sign_path);
-        $fileName = $act->id;
+        $fileName = $myDateTime->format('dmY').'_'.$act->id;
         $templateProcessor->saveAs($fileName.'.docx');
 
         return response()->download($fileName.'.docx')->deleteFileAfterSend(true);

@@ -32,18 +32,30 @@ class ActResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('expert_id')
-                    ->relationship('expert', 'getFio')
-                    ->required()
-                    ->label('Эксперт'),
                 TextInput::make('number')
                     ->required()
                     ->maxLength(255)
                     ->autofocus()
                     ->label('Номер акта'),
+                Select::make('type_act_id')
+                    ->relationship('type', 'short_name')
+                    ->required()
+                    ->label('Тип Сертификата'),
+                Select::make('expert_id')
+                    ->relationship('expert', 'surname')
+                    ->required()
+                    ->label('Эксперт'),
                 DatePicker::make('date')
                     ->required()
                     ->label('дата составления акта'),
+                TextInput::make('reason')
+                    ->required()
+                    ->maxLength(255)
+                    ->label('Основание для проведения экспертизы'),
+                Select::make('customer_id')
+                    ->relationship('customer', 'short_name')
+                    ->required()
+                    ->label('Заказчик экспертизы'),
             ]);
     }
 
@@ -54,9 +66,9 @@ class ActResource extends Resource
                 TextColumn::make('expert.surname')->label('Эксперт'),
                 TextColumn::make('number')->sortable()->label('Номер')
                 ->searchable(),
-                Tables\Columns\TextColumn::make('date')
+                TextColumn::make('date')
                     ->date()->sortable()->label('Дата составления'),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()->sortable()->label('Создан'),
             ])
             ->filters([
@@ -76,7 +88,7 @@ class ActResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ProductsRelationManager::class,
         ];
     }
 

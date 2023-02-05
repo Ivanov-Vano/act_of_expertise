@@ -18,4 +18,19 @@ class Act extends Model
     {
         return $this->belongsTo(Expert::class);
     }
+
+    public function type()
+    {
+        return $this->belongsTo(TypeAct::class, 'type_act_id');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Organization::class, 'customer_id');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }
