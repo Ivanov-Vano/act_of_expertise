@@ -20,8 +20,9 @@ class ProductFactory extends Factory
         return [
             'act_id' => Act::all()->random()->id,
             'hs_code_id' => HsCode::all()->random()->id,
-            'name' => $this->faker->word,
-            'item_number' => $this->faker->numerify('##########'),
+                        'name' => $this->faker->sentence(2),
+                        'brand' => $this->faker->sentence(1),
+                        'item_number' => $this->faker->numerify('##########'),
         ];
     }
 }

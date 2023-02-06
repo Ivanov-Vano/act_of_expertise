@@ -3,7 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\{Act, HsCode};
+use App\Models\Act;
+
 
 return new class extends Migration
 {
@@ -14,14 +15,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('attachments', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Act::class)->constrained()->onDelete('cascade');
-            $table->foreignIdFor(HsCode::class)->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->string('brand');
-            $table->string('item_number');
-            $table->softDeletes();
+            $table->string('file_path');
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('attachments');
     }
 };

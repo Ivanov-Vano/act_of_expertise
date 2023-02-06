@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Act extends Model
@@ -14,7 +15,7 @@ class Act extends Model
         'number',
         'date',
     ];
-    public function expert()
+    public function expert():BelongsTo
     {
         return $this->belongsTo(Expert::class);
     }
@@ -29,8 +30,32 @@ class Act extends Model
         return $this->belongsTo(Organization::class, 'customer_id');
     }
 
+    public function exporter()
+    {
+        return $this->belongsTo(Organization::class, 'exporter_id');
+    }
+    public function shipper()
+    {
+        return $this->belongsTo(Organization::class, 'shipper_id');
+    }
+    public function manufacturer()
+    {
+        return $this->belongsTo(Organization::class, 'manufacturer_id');
+    }
+    public function importer()
+    {
+        return $this->belongsTo(Organization::class, 'importer_id');
+    }
+    public function consignee()
+    {
+        return $this->belongsTo(Organization::class, 'consignee_id');
+    }
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class);
     }
 }

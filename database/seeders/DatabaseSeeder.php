@@ -16,11 +16,8 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-/*        \App\Models\User::factory()->create([
-             'name' => 'admin',
-             'email' => 'admin@admin.com',
-         ]);*/
         $this->call([
+            UserSeeder::class,
             ExpertSeeder::class,
             TypeActSeeder::class,
             CountrySeeder::class,
@@ -28,6 +25,7 @@ class DatabaseSeeder extends Seeder
             ActSeeder::class,
             HsCodeSeeder::class,
             ProductSeeder::class,
+            AttachmentSeeder::class,
         ]);
     }
 }

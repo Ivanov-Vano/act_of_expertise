@@ -17,6 +17,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\Section;
 
 class ActResource extends Resource
 {
@@ -56,6 +57,73 @@ class ActResource extends Resource
                     ->relationship('customer', 'short_name')
                     ->required()
                     ->label('Заказчик экспертизы'),
+                Section::make('Количество')
+                    ->description('(в единицах измерения)')
+                    ->schema([
+                        TextInput::make('gross')
+                            ->required()
+                            ->numeric()
+                            ->mask(fn (TextInput\Mask $mask) => $mask
+                                ->numeric()
+                                ->decimalPlaces(2)
+                            )
+                            ->label('Брутто'),
+                        TextInput::make('netto')
+                            ->required()
+                            ->numeric()
+                            ->mask(fn (TextInput\Mask $mask) => $mask
+                                ->numeric()
+                                ->decimalPlaces(2)
+                            )
+                            ->label('Нетто'),
+                        TextInput::make('measure')
+                            ->datalist(['кг', 'куб. м'])
+                            ->required()
+                            ->label('Единица измерения'),
+                        TextInput::make('position')
+                            ->label('Позиции'),
+                    ])
+                ->columns(3),
+                Section::make('Контракт и счет')
+                    ->schema([
+                        TextInput::make('contract')
+                            ->label('Контракт'),
+                        TextInput::make('invoice')
+                            ->label('Счет'),
+                    ])
+                    ->columns(2),
+                Select::make('manufacturer_id')
+                    ->relationship('manufacturer', 'short_name')
+                    ->required()
+                    ->columnSpanFull()
+                    ->label('Изготовитель'),
+                Section::make('Компании')
+                    ->description('Грузовое отправление')
+                    ->schema([
+                        Select::make('exporter_id')
+                            ->relationship('exporter', 'short_name')
+                            ->required()
+                            ->label('Экспортер'),
+                        Select::make('shipper_id')
+                            ->relationship('shipper', 'short_name')
+                            ->required()
+                            ->label('Грузоотправитель'),
+                        Select::make('importer_id')
+                            ->relationship('importer', 'short_name')
+                            ->required()
+                            ->label('Импортер'),
+                        Select::make('consignee_id')
+                            ->relationship('consignee', 'short_name')
+                            ->required()
+                            ->label('Грузополучатель'),
+                        TextInput::make('cargo')
+                            ->columnSpanFull()
+                            ->label('Транспортное средство'),
+                        TextInput::make('package')
+                            ->columnSpanFull()
+                            ->label('Вид упаковки'),
+                    ])
+                    ->columns(2),
             ]);
     }
 
@@ -89,6 +157,7 @@ class ActResource extends Resource
     {
         return [
             RelationManagers\ProductsRelationManager::class,
+            RelationManagers\AttachmentsRelationManager::class,
         ];
     }
 

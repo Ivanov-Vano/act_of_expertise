@@ -52,8 +52,8 @@ class ExpertResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('surname')->sortable()->label('Фамилия'),
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('patronymic'),
+                Tables\Columns\TextColumn::make('name')->label('Имя'),
+                Tables\Columns\TextColumn::make('patronymic')->label('Отчество'),
             ])
             ->filters([
 /*                Tables\Filters\Filter::make('surname')

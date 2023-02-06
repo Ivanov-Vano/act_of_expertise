@@ -13,6 +13,7 @@ class Product extends Model
     protected $fillable =[
         'hs_code_id',
         'name',
+        'brand',
         'item_number',
 
     ];

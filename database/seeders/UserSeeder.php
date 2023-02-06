@@ -2,12 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Attachment;
-use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
 
-class ProductSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,6 +15,6 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        Product::factory(2)->create();
+                User::factory()->create();
     }
 }

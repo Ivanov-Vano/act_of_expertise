@@ -105,6 +105,7 @@ class ActController extends Controller
         $templateProcessor = new TemplateProcessor('word-template/act_template.docx');
         $templateProcessor->setValue('type', $act->type->short_name);
 
+
         $templateProcessor->setValue('number', $act->number);
         $templateProcessor->setValue('expert', $myFio);
         $templateProcessor->setValue('date', $myDateTime->format('d.m.Y'));
@@ -114,14 +115,54 @@ class ActController extends Controller
         $templateProcessor->setValue('customer_inn', $act->customer->inn);
         $templateProcessor->setValue('customer_adress', $act->customer->address);
 
-        foreach ($products as $product)
+        $replacements = $products->toArray();
+
+        $templateProcessor->cloneBlock('block_product', 0, true, false, $replacements);
+        /*        foreach ($products as $product)
         {
             $templateProcessor->setValue('product_name', $product->name);
             $templateProcessor->setValue('product_number', $product->number);
             $templateProcessor->setValue('product_code', $product->hscode->code);
-        }
+        }*/
 
-        $templateProcessor->setImageValue('sign', 'storage/'.$act->expert->sign_path);
+        $templateProcessor->setValue('measure', $act->measure);
+        $templateProcessor->setValue('gross', $act->gross);
+        $templateProcessor->setValue('netto', $act->netto);
+
+        $templateProcessor->setValue('position', $act->position);
+        $templateProcessor->setValue('contract', $act->contract);
+        $templateProcessor->setValue('invoice', $act->invoice);
+
+        $templateProcessor->setValue('exporter_name', $act->exporter->short_name);
+        $templateProcessor->setValue('exporter_inn', $act->exporter->inn);
+        $templateProcessor->setValue('exporter_address', $act->exporter->address);
+        $templateProcessor->setValue('exporter_country', $act->exporter->country->short_name);
+
+        $templateProcessor->setValue('shipper_name', $act->shipper->short_name);
+        $templateProcessor->setValue('shipper_inn', $act->shipper->inn);
+        $templateProcessor->setValue('shipper_address', $act->shipper->address);
+        $templateProcessor->setValue('shipper_country', $act->shipper->country->short_name);
+
+        $templateProcessor->setValue('manufacturer_name', $act->manufacturer->short_name);
+        $templateProcessor->setValue('manufacturer_inn', $act->manufacturer->inn);
+        $templateProcessor->setValue('manufacturer_address', $act->manufacturer->address);
+        $templateProcessor->setValue('manufacturer_country', $act->manufacturer->country->short_name);
+
+        $templateProcessor->setValue('importer_name', $act->importer->short_name);
+        $templateProcessor->setValue('importer_inn', $act->importer->inn);
+        $templateProcessor->setValue('importer_address', $act->importer->address);
+        $templateProcessor->setValue('importer_country', $act->importer->country->short_name);
+
+        $templateProcessor->setValue('consignee_name', $act->consignee->short_name);
+        $templateProcessor->setValue('consignee_inn', $act->consignee->inn);
+        $templateProcessor->setValue('consignee_address', $act->consignee->address);
+        $templateProcessor->setValue('consignee_country', $act->consignee->country->short_name);
+
+        $templateProcessor->setValue('cargo', $act->cargo);
+        $templateProcessor->setValue('package', $act->package);
+
+        isset($act->expert->sign_path) ?
+            $templateProcessor->setImageValue('sign', 'storage/'.$act->expert->sign_path) : '';
         $fileName = $myDateTime->format('dmY').'_'.$act->id;
         $templateProcessor->saveAs($fileName.'.docx');
 
