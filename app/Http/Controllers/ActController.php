@@ -6,6 +6,8 @@ use App\Http\Requests;
 use App\Http\Requests\StoreActRequest;
 use App\Http\Requests\UpdateActRequest;
 use App\Models\Act;
+use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpWord\TemplateProcessor;
 
 
@@ -99,7 +101,17 @@ class ActController extends Controller
     public function wordExport($id)
     {
         $act = Act::findOrFail($id);
-        $products = $act->products;
+
+        $productsByAct = DB::table('products')
+            ->where('act_id', '=', $id)
+            ->join('hs_codes', 'hs_codes.id', '=', 'products.hs_code_id')
+            ->select('name as product_name', 'brand as product_brand',
+                'item_number as product_item_number', 'hs_codes.code as product_hscode')
+        ->get();
+        $products = $productsByAct->toArray();
+
+        $attachmentsByAct = $act->attachments;
+        $attachments = $attachmentsByAct->toArray();
         $myFio = $act->expert->getFio();
         $myDateTime = date_create_from_format('Y-m-d', $act->date);
         $templateProcessor = new TemplateProcessor('word-template/act_template.docx');
@@ -115,15 +127,7 @@ class ActController extends Controller
         $templateProcessor->setValue('customer_inn', $act->customer->inn);
         $templateProcessor->setValue('customer_adress', $act->customer->address);
 
-        $replacements = $products->toArray();
-
-        $templateProcessor->cloneBlock('block_product', 0, true, false, $replacements);
-        /*        foreach ($products as $product)
-        {
-            $templateProcessor->setValue('product_name', $product->name);
-            $templateProcessor->setValue('product_number', $product->number);
-            $templateProcessor->setValue('product_code', $product->hscode->code);
-        }*/
+        $templateProcessor->cloneBlock('block_product', 0, true, false, $products);
 
         $templateProcessor->setValue('measure', $act->measure);
         $templateProcessor->setValue('gross', $act->gross);
@@ -160,6 +164,8 @@ class ActController extends Controller
 
         $templateProcessor->setValue('cargo', $act->cargo);
         $templateProcessor->setValue('package', $act->package);
+
+        $templateProcessor->cloneBlock('block_attachment', 0, true, false, $attachments);
 
         isset($act->expert->sign_path) ?
             $templateProcessor->setImageValue('sign', 'storage/'.$act->expert->sign_path) : '';

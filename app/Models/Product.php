@@ -22,4 +22,8 @@ class Product extends Model
         return $this->belongsTo(HsCode::class,'hs_code_id');
     }
 
+    public function code_group()
+    {
+        return $this->belongsTo(CodeGroup::class,'code_group_id');
+    }
 }

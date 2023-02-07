@@ -36,6 +36,7 @@ return new class extends Migration
             $table->integer('consignee_id');
             $table->string('cargo')->nullable();
             $table->string('package')->nullable();
+            $table->binary('description')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

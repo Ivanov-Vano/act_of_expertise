@@ -32,6 +32,10 @@ class ProductsRelationManager extends RelationManager
                     ->required()
                     ->label('Наименование')
                     ->maxLength(255),
+                TextInput::make('brand')
+                    ->required()
+                    ->label('Марка')
+                    ->maxLength(255),
                 TextInput::make('item_number')
                     ->required()
                     ->label('Артикул')
@@ -40,6 +44,10 @@ class ProductsRelationManager extends RelationManager
                     ->relationship('hscode', 'code')
                     ->required()
                     ->label('Код ТН ВЭД'),
+                Select::make('code_group_id')
+                    ->relationship('code_group', 'number')
+                    ->required()
+                    ->label('Группа ТН ВЭД'),
 
             ]);
     }
@@ -50,10 +58,15 @@ class ProductsRelationManager extends RelationManager
             ->columns([
                 TextColumn::make('name')
                     ->label('Наименование'),
+                TextColumn::make('brand')
+                    ->label('Марка'),
                 TextColumn::make('item_number')
                     ->label('Артикул'),
                 TextColumn::make('hscode.code')
                     ->label('Код ТН ВЭД'),
+                TextColumn::make('code_group.number')
+                    ->label('Группа ТН ВЭД'),
+
             ])
             ->filters([
             ])

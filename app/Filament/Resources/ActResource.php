@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Section;
 
@@ -124,6 +125,9 @@ class ActResource extends Resource
                             ->label('Вид упаковки'),
                     ])
                     ->columns(2),
+                RichEditor::make('description')
+                    ->columnSpanFull()
+                    ->label('Описание'),
             ]);
     }
 

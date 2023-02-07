@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\CodeGroup;
 
 return new class extends Migration
 {
@@ -13,12 +14,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('type_acts', function (Blueprint $table) {
+        Schema::create('code_groups', function (Blueprint $table) {
             $table->id();
-            $table->string('short_name',50);
-            $table->string('name')->nullable();
-            $table->text('description')->nullable();
+            $table->string('number');
+            $table->text('name');
+            $table->text('condition');
             $table->timestamps();
+        });
+        Schema::table('products', function (Blueprint $table) {
+            $table->foreignIdFor(CodeGroup::class)->constrained()->onDelete('cascade');
         });
     }
 
@@ -29,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('type_acts');
+        Schema::dropIfExists('code_groups');
     }
 };
