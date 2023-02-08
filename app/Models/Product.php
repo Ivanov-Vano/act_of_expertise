@@ -15,6 +15,7 @@ class Product extends Model
         'name',
         'brand',
         'item_number',
+        'code_group_id'
 
     ];
     public function hscode()

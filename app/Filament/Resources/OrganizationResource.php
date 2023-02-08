@@ -35,7 +35,6 @@ class OrganizationResource extends Resource
                     ->required()
                     ->label('Страна'),
                 TextInput::make('short_name')
-                    ->required()
                     ->maxLength(100)
                     ->required()
                     ->label('Наименование'),
@@ -60,7 +59,8 @@ class OrganizationResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('country.short_name')
-                    ->label('Страна'),
+                    ->label('Страна')
+                    ->searchable(),
                 TextColumn::make('short_name')
                     ->label('Наименование')
                     ->searchable(),

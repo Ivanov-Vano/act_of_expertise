@@ -12,8 +12,26 @@ class Act extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable =[
-        'number',
         'date',
+        'reason',
+        'gross',
+        'netto',
+        'measure',
+        'position',
+        'contract',
+        'invoice',
+        'exporter_id',
+        'shipper_id',
+        'manufacturer_id',
+        'importer_id',
+        'consignee_id',
+        'cargo',
+        'package',
+        'description',
+        'number',
+        'customer_id',
+        'type_act_id',
+        'expert_id',
     ];
     public function expert():BelongsTo
     {

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Act::class)->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->string('file_path');
+            $table->string('file_path')->nullable();
             $table->timestamps();
         });
     }

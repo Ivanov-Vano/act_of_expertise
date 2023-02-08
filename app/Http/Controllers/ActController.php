@@ -127,7 +127,7 @@ class ActController extends Controller
         $templateProcessor->setValue('customer_inn', $act->customer->inn);
         $templateProcessor->setValue('customer_adress', $act->customer->address);
 
-        $templateProcessor->cloneBlock('block_product', 0, true, false, $products);
+        $templateProcessor->cloneBlock('block_product_main', 0, true, false, $products);
 
         $templateProcessor->setValue('measure', $act->measure);
         $templateProcessor->setValue('gross', $act->gross);
@@ -166,6 +166,7 @@ class ActController extends Controller
         $templateProcessor->setValue('package', $act->package);
 
         $templateProcessor->cloneBlock('block_attachment', 0, true, false, $attachments);
+        $templateProcessor->cloneBlock('block_product', 0, true, false, $products);
 
         isset($act->expert->sign_path) ?
             $templateProcessor->setImageValue('sign', 'storage/'.$act->expert->sign_path) : '';

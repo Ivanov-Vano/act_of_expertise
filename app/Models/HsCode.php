@@ -11,7 +11,6 @@ class HsCode extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable =[
-        'name',
-        'item_number',
+        'code'
     ];
 }
