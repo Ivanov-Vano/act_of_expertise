@@ -31,7 +31,6 @@ return new class extends Migration
             $table->string('invoice')->nullable();
             $table->integer('exporter_id');
             $table->integer('shipper_id');
-            $table->integer('manufacturer_id');
             $table->integer('importer_id');
             $table->integer('consignee_id');
             $table->string('cargo')->nullable();

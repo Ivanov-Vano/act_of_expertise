@@ -20,7 +20,12 @@ return new class extends Migration
             $table->foreignIdFor(HsCode::class)->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('brand');
+            $table->integer('manufacturer_id');
             $table->string('item_number');
+            $table->float('gross');
+            $table->float('netto');
+            $table->enum('measure', ['кг', 'куб. м']);
+            $table->enum('origin_criterion', ['Полная', 'Достаточная']);
             $table->softDeletes();
             $table->timestamps();
         });

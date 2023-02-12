@@ -6,6 +6,7 @@ use App\Filament\Resources\ActResource\Pages;
 use App\Filament\Resources\ActResource\RelationManagers;
 use App\Models\Act;
 use App\Models\Expert;
+use App\Models\Organization;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -44,7 +45,8 @@ class ActResource extends Resource
                     ->required()
                     ->label('Тип Сертификата'),
                 Select::make('expert_id')
-                    ->relationship('expert', 'surname')
+                    ->relationship('expert', 'full_name')
+                    //->relationship('expert', 'surname')
                     ->required()
                     ->label('Эксперт'),
                 DatePicker::make('date')
@@ -93,28 +95,31 @@ class ActResource extends Resource
                             ->label('Счет'),
                     ])
                     ->columns(2),
-                Select::make('manufacturer_id')
-                    ->relationship('manufacturer', 'short_name')
-                    ->required()
-                    ->columnSpanFull()
-                    ->label('Изготовитель'),
                 Section::make('Компании')
                     ->description('Грузовое отправление')
                     ->schema([
                         Select::make('exporter_id')
                             ->relationship('exporter', 'short_name')
+                            ->searchable()
+                            ->preload()
                             ->required()
                             ->label('Экспортер'),
                         Select::make('shipper_id')
-                            ->relationship('shipper', 'short_name')
+                            ->searchable()
+                            ->getSearchResultsUsing(fn (string $search) => Organization::where('short_name', 'like', "%{$search}%")->limit(50)->pluck('short_name', 'id'))
+                            ->getOptionLabelUsing(fn ($value): ?string => Organization::find($value)?->short_name)
                             ->required()
                             ->label('Грузоотправитель'),
                         Select::make('importer_id')
                             ->relationship('importer', 'short_name')
                             ->required()
+                            ->searchable()
+                            ->preload()
                             ->label('Импортер'),
                         Select::make('consignee_id')
                             ->relationship('consignee', 'short_name')
+                            ->searchable()
+                            ->preload()
                             ->required()
                             ->label('Грузополучатель'),
                         TextInput::make('cargo')
@@ -135,9 +140,11 @@ class ActResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('expert.surname')->label('Эксперт'),
+                TextColumn::make('expert.full_name')->label('Эксперт'),
                 TextColumn::make('number')->sortable()->label('Номер')
                 ->searchable(),
+                TextColumn::make('customer.short_name')->sortable()->label('Заказчик')
+                    ->searchable(),
                 TextColumn::make('date')
                     ->date()->sortable()->label('Дата составления'),
                 TextColumn::make('created_at')

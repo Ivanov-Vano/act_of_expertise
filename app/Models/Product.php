@@ -15,7 +15,12 @@ class Product extends Model
         'name',
         'brand',
         'item_number',
-        'code_group_id'
+        'code_group_id',
+        'manufacturer_id',
+        'gross',
+        'netto',
+        'measure',
+        'origin_criterion',
 
     ];
     public function hscode()
@@ -26,5 +31,9 @@ class Product extends Model
     public function code_group()
     {
         return $this->belongsTo(CodeGroup::class,'code_group_id');
+    }
+    public function manufacturer()
+    {
+        return $this->belongsTo(Organization::class, 'manufacturer_id');
     }
 }

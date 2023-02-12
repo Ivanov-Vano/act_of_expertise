@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('patronymic')->nullable();
             $table->string('sign_path')->nullable();
+            $table->string('full_name')->virtualAs('concat(surname, \' \', name, \' \', patronymic)');
             $table->softDeletes();
             $table->timestamps();
         });

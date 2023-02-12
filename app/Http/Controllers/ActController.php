@@ -25,27 +25,6 @@ class ActController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreActRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreActRequest $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  $id
@@ -56,40 +35,6 @@ class ActController extends Controller
         $act = Act::findOrFail($id);
 
         return view('show', compact('act'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Act  $act
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Act $act)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateActRequest  $request
-     * @param  \App\Models\Act  $act
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateActRequest $request, Act $act)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Act  $act
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Act $act)
-    {
-        //
     }
 
     /**
@@ -110,6 +55,15 @@ class ActController extends Controller
         ->get();
         $products = $productsByAct->toArray();
 
+        $manufacturersByAct = DB::table('products')
+            ->where('act_id', '=', $id)
+            ->join('organizations', 'organizations.id', '=', 'products.manufacturer_id')
+            ->join('countries', 'countries.id', '=', 'organizations.country_id')
+            ->select('organizations.short_name as manufacturer_name', 'organizations.inn as manufacturer_inn',
+                'organizations.address as manufacturer_address', 'countries.short_name as manufacturer_country')
+            ->groupBy('products.manufacturer_id')
+            ->get();
+        $manufacturers = $manufacturersByAct->toArray();
         $attachmentsByAct = $act->attachments;
         $attachments = $attachmentsByAct->toArray();
         $myFio = $act->expert->getFio();
@@ -147,10 +101,7 @@ class ActController extends Controller
         $templateProcessor->setValue('shipper_address', $act->shipper->address);
         $templateProcessor->setValue('shipper_country', $act->shipper->country->short_name);
 
-        $templateProcessor->setValue('manufacturer_name', $act->manufacturer->short_name);
-        $templateProcessor->setValue('manufacturer_inn', $act->manufacturer->inn);
-        $templateProcessor->setValue('manufacturer_address', $act->manufacturer->address);
-        $templateProcessor->setValue('manufacturer_country', $act->manufacturer->country->short_name);
+        $templateProcessor->cloneBlock('block_manufacturer', 0, true, false, $manufacturers);
 
         $templateProcessor->setValue('importer_name', $act->importer->short_name);
         $templateProcessor->setValue('importer_inn', $act->importer->inn);

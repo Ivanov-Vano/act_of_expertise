@@ -3,11 +3,13 @@
 namespace App\Filament\Resources\ActResource\RelationManagers;
 
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Radio;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Builder;
@@ -48,6 +50,42 @@ class ProductsRelationManager extends RelationManager
                     ->relationship('code_group', 'number')
                     ->required()
                     ->label('Группа ТН ВЭД'),
+                Select::make('manufacturer_id')
+                    ->relationship('manufacturer', 'short_name')
+                    ->required()
+                    ->searchable()
+                    ->preload()
+                    ->columnSpanFull()
+                    ->label('Изготовитель'),
+                Radio::make('origin_criterion')
+                    ->options(['Полная' => 'полная', 'Достаточная' => 'достаточная'])
+                    ->inline()
+                    ->required()
+                    ->label('Критерий происхождения'),
+                Section::make('Количество')
+                    ->description('(в единицах измерения)')
+                    ->schema([
+                        TextInput::make('gross')
+                            ->required()
+                            ->numeric()
+                            ->mask(fn (TextInput\Mask $mask) => $mask
+                                ->numeric()
+                                ->decimalPlaces(2)
+                            )
+                            ->label('Брутто'),
+                        TextInput::make('netto')
+                            ->required()
+                            ->numeric()
+                            ->mask(fn (TextInput\Mask $mask) => $mask
+                                ->numeric()
+                                ->decimalPlaces(2)
+                            )
+                            ->label('Нетто'),
+                        TextInput::make('measure')
+                            ->datalist(['кг', 'куб. м'])
+                            ->required()
+                            ->label('Единица измерения'),
+                        ])
 
             ]);
     }

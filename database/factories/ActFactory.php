@@ -35,7 +35,6 @@ class ActFactory extends Factory
             'invoice' => $this->faker->bothify('Инвойс № ## от ##.##.####'),
             'exporter_id' => Organization::all()->random()->id,
             'shipper_id' => Organization::all()->random()->id,
-            'manufacturer_id' => Organization::all()->random()->id,
             'importer_id' => Organization::all()->random()->id,
             'consignee_id' => Organization::all()->random()->id,
             'cargo' => $this->faker->realTextBetween(160,255),
