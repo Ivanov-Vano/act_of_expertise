@@ -29,6 +29,7 @@ class ProductFactory extends Factory
             'netto' => $this->faker->randomFloat(2, 1, 99999),
             'origin_criterion' => $this->faker->randomElement(['Полная', 'Достаточная']),
             'measure' => $this->faker->randomElement(['кг', 'куб. м']),
+            'description' => $this->faker->sentence(),
         ];
     }
 }

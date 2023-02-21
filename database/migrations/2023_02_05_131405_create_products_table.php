@@ -26,6 +26,7 @@ return new class extends Migration
             $table->float('netto');
             $table->enum('measure', ['кг', 'куб. м']);
             $table->enum('origin_criterion', ['Полная', 'Достаточная']);
+            $table->binary('description')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

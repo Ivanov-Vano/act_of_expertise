@@ -21,7 +21,7 @@ class Product extends Model
         'netto',
         'measure',
         'origin_criterion',
-
+        'description',
     ];
     public function hscode()
     {

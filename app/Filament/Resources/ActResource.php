@@ -130,9 +130,6 @@ class ActResource extends Resource
                             ->label('Вид упаковки'),
                     ])
                     ->columns(2),
-                RichEditor::make('description')
-                    ->columnSpanFull()
-                    ->label('Описание'),
             ]);
     }
 

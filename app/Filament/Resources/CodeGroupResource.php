@@ -2,12 +2,12 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TypeActResource\Pages;
-use App\Filament\Resources\TypeActResource\RelationManagers;
-use App\Models\TypeAct;
+use App\Filament\Resources\CodeGroupResource\Pages;
+use App\Filament\Resources\CodeGroupResource\RelationManagers;
+use App\Models\CodeGroup;
 use Filament\Forms;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -16,32 +16,27 @@ use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class TypeActResource extends Resource
+class CodeGroupResource extends Resource
 {
-    protected static ?string $model = TypeAct::class;
+    protected static ?string $model = CodeGroup::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static ?string $navigationIcon = 'heroicon-o-collection';
 
-    protected static ?string $modelLabel = 'тип';
+    protected static ?string $modelLabel = 'правило';
 
-    protected static ?string $pluralModelLabel = 'типы';
+    protected static ?string $pluralModelLabel = 'правила';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('short_name')
-                    ->maxLength(50)
+                TextInput::make('number')
                     ->required()
-                    ->label('Наименование'),
+                    ->label('Код ТН ВЭД'),
                 TextInput::make('name')
-                    ->maxLength(255)
-                    ->label('Полное наименование'),
-                MarkdownEditor::make('text1')
-                    ->label('Текст1')
-                    ->columnSpanFull(),
-                MarkdownEditor::make('text2')
-                    ->label('Текст2')
+                    ->label('Наименование'),
+                MarkdownEditor::make('condition')
+                    ->label('Условия')
                     ->columnSpanFull(),
             ]);
     }
@@ -50,10 +45,12 @@ class TypeActResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('short_name')
-                    ->label('Краткое наименование'),
+                TextColumn::make('number')
+                    ->label('Код ТН ВЭД'),
                 TextColumn::make('name')
                     ->label('Наименование'),
+                TextColumn::make('condition')
+                    ->label('Условия'),
             ])
             ->filters([
                 //
@@ -70,7 +67,7 @@ class TypeActResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageTypeActs::route('/'),
+            'index' => Pages\ManageCodeGroups::route('/'),
         ];
     }
 }

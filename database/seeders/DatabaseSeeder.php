@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\CodeGroup;
 use Illuminate\Database\Seeder;
+use bfinlay\SpreadsheetSeeder\SpreadsheetSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,7 +25,8 @@ class DatabaseSeeder extends Seeder
             CountrySeeder::class,
             OrganizationSeeder::class,
             ActSeeder::class,
-            CodeGroupSeeder::class,
+            SpreadsheetSeeder::class,
+            //            CodeGroupSeeder::class,
             HsCodeSeeder::class,
             ProductSeeder::class,
             AttachmentSeeder::class,

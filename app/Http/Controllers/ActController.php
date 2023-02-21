@@ -50,8 +50,16 @@ class ActController extends Controller
         $productsByAct = DB::table('products')
             ->where('act_id', '=', $id)
             ->join('hs_codes', 'hs_codes.id', '=', 'products.hs_code_id')
-            ->select('name as product_name', 'brand as product_brand',
-                'item_number as product_item_number', 'hs_codes.code as product_hscode')
+            ->join('organizations as m', 'm.id', '=', 'products.manufacturer_id')
+            ->join('countries', 'countries.id', '=', 'm.country_id')
+            ->join('acts', 'acts.id', '=', 'products.act_id')
+            ->join('organizations as c', 'c.id', '=', 'acts.customer_id')
+            ->join('code_groups as cg', 'cg.id', '=', 'products.code_group_id')
+            ->select('products.name as product_name', 'brand as product_brand',
+                'item_number as product_item_number', 'hs_codes.code as product_hscode',
+            'm.short_name as product_manufacturer', 'countries.short_name as product_country',
+            'c.short_name as product_customer', 'cg.number as product_group', 'cg.condition as product_condition',
+            'products.description as product_description')
         ->get();
         $products = $productsByAct->toArray();
 
@@ -66,6 +74,16 @@ class ActController extends Controller
         $manufacturers = $manufacturersByAct->toArray();
         $attachmentsByAct = $act->attachments;
         $attachments = $attachmentsByAct->toArray();
+
+        $criteriaByAct = DB::table('products')
+            ->where('act_id', '=', $id)
+            ->join('hs_codes as hc', 'hc.id', '=', 'products.hs_code_id')
+            ->groupBy('hc.code', 'origin_criterion')
+            ->select(DB::raw("(substring(code, 1, 4)) as code, (substring(origin_criterion, 1, 1)) as criteria,
+       case when origin_criterion='Полная' then 'полной' else 'достаточной' end as text"))
+            ->get();
+        $criteria = $criteriaByAct->toArray();
+
         $myFio = $act->expert->getFio();
         $myDateTime = date_create_from_format('Y-m-d', $act->date);
         $templateProcessor = new TemplateProcessor('word-template/act_template.docx');
@@ -116,8 +134,20 @@ class ActController extends Controller
         $templateProcessor->setValue('cargo', $act->cargo);
         $templateProcessor->setValue('package', $act->package);
 
+
         $templateProcessor->cloneBlock('block_attachment', 0, true, false, $attachments);
         $templateProcessor->cloneBlock('block_product', 0, true, false, $products);
+
+        $templateProcessor->setValue('type_acts_text1', $act->type->text1);
+        $templateProcessor->setValue('type_acts_text2', $act->type->text2);
+
+        $templateProcessor->cloneBlock('block_product_result', 0, true, false, $products);
+
+
+        $plural_text = (($act->products()->count()) > 1) ? 'товары' : 'товар';
+        $templateProcessor->setValue('product_plural', $plural_text);
+
+        $templateProcessor->cloneBlock('block_product_criteria', 0, true, false, $criteria);
 
         isset($act->expert->sign_path) ?
             $templateProcessor->setImageValue('sign', 'storage/'.$act->expert->sign_path) : '';

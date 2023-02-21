@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ActResource\RelationManagers;
 
 use Filament\Forms;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -85,8 +86,10 @@ class ProductsRelationManager extends RelationManager
                             ->datalist(['кг', 'куб. м'])
                             ->required()
                             ->label('Единица измерения'),
-                        ])
-
+                        ]),
+                        RichEditor::make('description')
+                            ->columnSpanFull()
+                            ->label('Описание'),
             ]);
     }
 

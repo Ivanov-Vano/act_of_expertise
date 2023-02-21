@@ -12,7 +12,8 @@ class TypeAct extends Model
     protected $fillable =[
         'short_name',
         'name',
-        'description'
+        'text1',
+        'text2'
     ];
 
 }
