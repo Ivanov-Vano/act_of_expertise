@@ -22,57 +22,52 @@ class Act extends Model
         'invoice',
         'exporter_id',
         'shipper_id',
-        'manufacturer_id',
         'importer_id',
         'consignee_id',
         'cargo',
         'package',
-        'description',
         'number',
         'customer_id',
         'type_act_id',
         'expert_id',
     ];
+
     public function expert():BelongsTo
     {
         return $this->belongsTo(Expert::class);
     }
 
-    public function type()
+    public function type(): BelongsTo
     {
         return $this->belongsTo(TypeAct::class, 'type_act_id');
     }
 
-    public function customer()
+    public function customer(): BelongsTo
     {
         return $this->belongsTo(Organization::class, 'customer_id');
     }
 
-    public function exporter()
+    public function exporter(): BelongsTo
     {
         return $this->belongsTo(Organization::class, 'exporter_id');
     }
-    public function shipper()
+    public function shipper(): BelongsTo
     {
         return $this->belongsTo(Organization::class, 'shipper_id');
     }
-    public function manufacturer()
-    {
-        return $this->belongsTo(Organization::class, 'manufacturer_id');
-    }
-    public function importer()
+    public function importer(): BelongsTo
     {
         return $this->belongsTo(Organization::class, 'importer_id');
     }
-    public function consignee()
+    public function consignee(): BelongsTo
     {
         return $this->belongsTo(Organization::class, 'consignee_id');
     }
-    public function products()
+    public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Product::class);
     }
-    public function attachments()
+    public function attachments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Attachment::class);
     }
