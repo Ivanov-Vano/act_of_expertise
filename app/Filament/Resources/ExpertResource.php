@@ -25,6 +25,7 @@ class ExpertResource extends Resource
 
     protected static ?string $pluralModelLabel = 'эксперты';
 
+    protected static ?string $navigationGroup = 'Справочники';
 
     public static function form(Form $form): Form
     {
@@ -43,7 +44,10 @@ class ExpertResource extends Resource
                     ->label('Отчество')
                     ->maxLength(255),
                 FileUpload::make('sign_path')
-                    ->label('Подпись'),
+                    ->label('Подпись')
+                ->directory('sings')
+                    ->avatar()
+                ->acceptedFileTypes(['image/png']),
             ]);
     }
 

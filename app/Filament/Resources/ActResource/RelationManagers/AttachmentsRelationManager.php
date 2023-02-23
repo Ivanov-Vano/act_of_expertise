@@ -33,6 +33,8 @@ class AttachmentsRelationManager extends RelationManager
                     ->maxLength(255),
                 FileUpload::make('file_path')
                     ->directory('attachments')
+                    ->preserveFilenames()
+                    ->enableDownload()
                     ->label('Документ'),
             ]);
     }

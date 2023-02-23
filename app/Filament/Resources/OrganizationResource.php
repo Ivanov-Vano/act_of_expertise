@@ -26,6 +26,12 @@ class OrganizationResource extends Resource
 
     protected static ?string $pluralModelLabel = 'организации';
 
+    protected static ?string $navigationGroup = 'Справочники';
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
     public static function form(Form $form): Form
     {
         return $form

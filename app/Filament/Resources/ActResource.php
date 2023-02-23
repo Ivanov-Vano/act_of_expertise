@@ -27,6 +27,11 @@ class ActResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
     protected static ?string $modelLabel = 'акт экспертизы';
 
     protected static ?string $pluralModelLabel = 'акты';

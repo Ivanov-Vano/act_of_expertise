@@ -26,6 +26,8 @@ class TypeActResource extends Resource
 
     protected static ?string $pluralModelLabel = 'типы';
 
+    protected static ?string $navigationGroup = 'Справочники';
+
     public static function form(Form $form): Form
     {
         return $form

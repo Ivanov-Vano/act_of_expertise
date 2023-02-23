@@ -26,6 +26,8 @@ class CodeGroupResource extends Resource
 
     protected static ?string $pluralModelLabel = 'правила';
 
+    protected static ?string $navigationGroup = 'Справочники';
+
     public static function form(Form $form): Form
     {
         return $form
