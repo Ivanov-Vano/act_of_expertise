@@ -63,6 +63,8 @@ class ActResource extends Resource
                     ->label('Основание для проведения экспертизы'),
                 Select::make('customer_id')
                     ->relationship('customer', 'short_name')
+                    ->searchable()
+                    ->preload()
                     ->required()
                     ->label('Заказчик экспертизы'),
                 Section::make('Количество')
@@ -111,8 +113,9 @@ class ActResource extends Resource
                             ->label('Экспортер'),
                         Select::make('shipper_id')
                             ->searchable()
-                            ->getSearchResultsUsing(fn (string $search) => Organization::where('short_name', 'like', "%{$search}%")->limit(50)->pluck('short_name', 'id'))
-                            ->getOptionLabelUsing(fn ($value): ?string => Organization::find($value)?->short_name)
+                            ->preload()
+/*                            ->getSearchResultsUsing(fn (string $search) => Organization::where('short_name', 'like', "%{$search}%")->limit(50)->pluck('short_name', 'id'))
+                            ->getOptionLabelUsing(fn ($value): ?string => Organization::find($value)?->short_name)*/
                             ->required()
                             ->label('Грузоотправитель'),
                         Select::make('importer_id')

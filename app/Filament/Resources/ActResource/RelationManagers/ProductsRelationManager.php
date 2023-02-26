@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ActResource\RelationManagers;
 
+use App\Models\CodeGroup;
 use Filament\Forms;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
@@ -15,6 +16,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Code;
 
 class ProductsRelationManager extends RelationManager
 {
@@ -46,11 +48,22 @@ class ProductsRelationManager extends RelationManager
                 Select::make('hs_code_id')
                     ->relationship('hscode', 'code')
                     ->required()
+                    ->preload()
+                    ->searchable()
                     ->label('Код ТН ВЭД'),
                 Select::make('code_group_id')
-                    ->relationship('code_group', 'number')
+                    ->relationship('code_group', 'number', fn (Builder $query) => $query
+                        ->orderBy('id'))
                     ->required()
-                    ->label('Группа ТН ВЭД'),
+                    ->label('Группа ТН ВЭД')
+                    ->searchable()
+                    ->columnSpanFull()
+                    ->preload(),
+/*                    ->getSearchResultsUsing(fn (string $search) => CodeGroup::where('number', 'like', "%{$search}%")
+                        ->orderBy('id')
+                        ->limit(50)
+                        ->pluck('number', 'id'))
+                    ->getOptionLabelUsing(fn ($value): ?string => CodeGroup::find($value)?->number),*/
                 Select::make('manufacturer_id')
                     ->relationship('manufacturer', 'short_name')
                     ->required()
