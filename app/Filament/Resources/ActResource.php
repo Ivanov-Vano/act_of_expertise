@@ -114,6 +114,7 @@ class ActResource extends Resource
                         Select::make('shipper_id')
                             ->searchable()
                             ->preload()
+                            ->relationship('shipper', 'short_name')
 /*                            ->getSearchResultsUsing(fn (string $search) => Organization::where('short_name', 'like', "%{$search}%")->limit(50)->pluck('short_name', 'id'))
                             ->getOptionLabelUsing(fn ($value): ?string => Organization::find($value)?->short_name)*/
                             ->required()
