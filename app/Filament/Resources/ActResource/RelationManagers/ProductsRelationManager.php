@@ -15,6 +15,7 @@ use Filament\Forms\Components\Radio;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Code;
 
@@ -47,13 +48,14 @@ class ProductsRelationManager extends RelationManager
                     ->maxLength(255),
                 Select::make('hs_code_id')
                     ->relationship('hscode', 'code')
-                    ->required()
                     ->preload()
                     ->searchable()
                     ->label('Код ТН ВЭД'),
                 Select::make('code_group_id')
-                    ->relationship('code_group', 'number', fn (Builder $query) => $query
-                        ->orderBy('id'))
+                    ->relationship('code_group', 'number')
+                    /*                    ->relationship('code_group', 'number', fn (Builder $query) => $query
+                                            ->orderBy('id'))*/
+                    ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->number} / {$record->name}")
                     ->required()
                     ->label('Группа ТН ВЭД')
                     ->searchable()

@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\RichEditor;
+
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Section;
 
@@ -111,6 +111,12 @@ class ActResource extends Resource
                             ->preload()
                             ->required()
                             ->label('Экспортер'),
+/*                            >createOptionForm([
+                                TextInput::make('short_name')
+                                    ->required(),
+                                TextInput::make('name')
+                                    ->required(),
+                            ]),*/
                         Select::make('shipper_id')
                             ->searchable()
                             ->preload()
