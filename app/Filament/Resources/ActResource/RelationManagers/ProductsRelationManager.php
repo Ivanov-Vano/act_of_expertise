@@ -102,7 +102,7 @@ class ProductsRelationManager extends RelationManager
                             ->required()
                             ->label('Единица измерения'),
                         ]),
-                        RichEditor::make('description')
+                        TextInput::make('description')
                             ->columnSpanFull()
                             ->label('Описание'),
             ]);

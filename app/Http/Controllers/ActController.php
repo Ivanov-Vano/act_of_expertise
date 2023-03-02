@@ -47,7 +47,7 @@ class ActController extends Controller
     {
         $act = Act::findOrFail($id);
 
-        $productsByAct = DB::table('products')
+/*        $productsByAct = DB::table('products')
             ->where('act_id', '=', $id)
             ->join('hs_codes', 'hs_codes.id', '=', 'products.hs_code_id')
             ->join('organizations as m', 'm.id', '=', 'products.manufacturer_id')
@@ -60,6 +60,32 @@ class ActController extends Controller
             'm.short_name as product_manufacturer', 'countries.short_name as product_country',
             'c.short_name as product_customer', 'cg.number as product_group', 'cg.condition as product_condition',
             'products.description as product_description')
+            ->groupBy()
+        ->get();
+        $products = $productsByAct->toArray();*/
+
+        $subProductsByAct = DB::table('products')
+            ->where('act_id', '=', $id)
+            ->select(DB::raw('group_concat(name) as product_name, group_concat(brand) as product_brand,
+                group_concat(item_number) as product_item_number, group_concat(products.description) as product_description'),
+                'hs_code_id', 'code_group_id', 'act_id', 'manufacturer_id')
+            ->groupBy('hs_code_id', 'code_group_id', 'act_id', 'manufacturer_id')
+            ->limit(20);
+
+        $productsByAct = DB::query()
+            ->fromSub($subProductsByAct, 'p_agg')
+            ->join('hs_codes', 'hs_codes.id', '=', 'p_agg.hs_code_id')
+            ->join('organizations as m', 'm.id', '=', 'p_agg.manufacturer_id')
+            ->join('countries', 'countries.id', '=', 'm.country_id')
+            ->join('acts', 'acts.id', '=', 'p_agg.act_id')
+            ->join('organizations as c', 'c.id', '=', 'acts.customer_id')
+            ->join('code_groups as cg', 'cg.id', '=', 'p_agg.code_group_id')
+            ->select('product_name', 'product_brand',
+                'product_item_number', 'hs_codes.code as product_hscode',
+            'm.short_name as product_manufacturer', 'countries.short_name as product_country',
+            'c.short_name as product_customer', 'cg.number as product_group', 'cg.condition as product_condition',
+            'product_description')
+            ->groupBy()
         ->get();
         $products = $productsByAct->toArray();
 
