@@ -123,7 +123,7 @@ class ActController extends Controller
 
         $templateProcessor->setValue('customer_name', $act->customer->short_name);
         $templateProcessor->setValue('customer_inn', $act->customer->inn);
-        $templateProcessor->setValue('customer_adress', $act->customer->address);
+        $templateProcessor->setValue('customer_address', $act->customer->address);
 
         $templateProcessor->cloneBlock('block_product_main', 0, true, false, $products);
 

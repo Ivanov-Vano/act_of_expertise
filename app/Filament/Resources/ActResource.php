@@ -65,6 +65,29 @@ class ActResource extends Resource
                     ->relationship('customer', 'short_name')
                     ->searchable()
                     ->preload()
+                    ->createOptionForm([
+                        Select::make('country_id')
+                            ->relationship('country', 'short_name')
+                            ->required()
+                            ->label('Страна'),
+                        TextInput::make('short_name')
+                            ->maxLength(100)
+                            ->required()
+                            ->label('Наименование'),
+                        TextInput::make('name')
+                            ->maxLength(255)
+                            ->label('Полное наименование'),
+                        TextInput::make('inn')
+                            ->maxLength(50)
+                            ->label('ИНН'),
+                        TextInput::make('phone')
+                            ->tel()
+                            ->maxLength(50)
+                            ->label('Телефон'),
+                        TextInput::make('address')
+                            ->maxLength(255)
+                            ->label('Почтовый адрес'),
+                    ])
                     ->required()
                     ->label('Заказчик экспертизы'),
                 Section::make('Количество')
@@ -109,32 +132,116 @@ class ActResource extends Resource
                             ->relationship('exporter', 'short_name')
                             ->searchable()
                             ->preload()
+                            ->createOptionForm([
+                                Select::make('country_id')
+                                    ->relationship('country', 'short_name')
+                                    ->required()
+                                    ->label('Страна'),
+                                TextInput::make('short_name')
+                                    ->maxLength(100)
+                                    ->required()
+                                    ->label('Наименование'),
+                                TextInput::make('name')
+                                    ->maxLength(255)
+                                    ->label('Полное наименование'),
+                                TextInput::make('inn')
+                                    ->maxLength(50)
+                                    ->label('ИНН'),
+                                TextInput::make('phone')
+                                    ->tel()
+                                    ->maxLength(50)
+                                    ->label('Телефон'),
+                                TextInput::make('address')
+                                    ->maxLength(255)
+                                    ->label('Почтовый адрес'),
+                            ])
                             ->required()
                             ->label('Экспортер'),
-/*                            >createOptionForm([
-                                TextInput::make('short_name')
-                                    ->required(),
-                                TextInput::make('name')
-                                    ->required(),
-                            ]),*/
                         Select::make('shipper_id')
                             ->searchable()
                             ->preload()
                             ->relationship('shipper', 'short_name')
-/*                            ->getSearchResultsUsing(fn (string $search) => Organization::where('short_name', 'like', "%{$search}%")->limit(50)->pluck('short_name', 'id'))
-                            ->getOptionLabelUsing(fn ($value): ?string => Organization::find($value)?->short_name)*/
                             ->required()
+                            ->createOptionForm([
+                                Select::make('country_id')
+                                    ->relationship('country', 'short_name')
+                                    ->required()
+                                    ->label('Страна'),
+                                TextInput::make('short_name')
+                                    ->maxLength(100)
+                                    ->required()
+                                    ->label('Наименование'),
+                                TextInput::make('name')
+                                    ->maxLength(255)
+                                    ->label('Полное наименование'),
+                                TextInput::make('inn')
+                                    ->maxLength(50)
+                                    ->label('ИНН'),
+                                TextInput::make('phone')
+                                    ->tel()
+                                    ->maxLength(50)
+                                    ->label('Телефон'),
+                                TextInput::make('address')
+                                    ->maxLength(255)
+                                    ->label('Почтовый адрес'),
+                            ])
                             ->label('Грузоотправитель'),
                         Select::make('importer_id')
                             ->relationship('importer', 'short_name')
                             ->required()
                             ->searchable()
                             ->preload()
+                            ->createOptionForm([
+                                Select::make('country_id')
+                                    ->relationship('country', 'short_name')
+                                    ->required()
+                                    ->label('Страна'),
+                                TextInput::make('short_name')
+                                    ->maxLength(100)
+                                    ->required()
+                                    ->label('Наименование'),
+                                TextInput::make('name')
+                                    ->maxLength(255)
+                                    ->label('Полное наименование'),
+                                TextInput::make('inn')
+                                    ->maxLength(50)
+                                    ->label('ИНН'),
+                                TextInput::make('phone')
+                                    ->tel()
+                                    ->maxLength(50)
+                                    ->label('Телефон'),
+                                TextInput::make('address')
+                                    ->maxLength(255)
+                                    ->label('Почтовый адрес'),
+                            ])
                             ->label('Импортер'),
                         Select::make('consignee_id')
                             ->relationship('consignee', 'short_name')
                             ->searchable()
                             ->preload()
+                            ->createOptionForm([
+                                Select::make('country_id')
+                                    ->relationship('country', 'short_name')
+                                    ->required()
+                                    ->label('Страна'),
+                                TextInput::make('short_name')
+                                    ->maxLength(100)
+                                    ->required()
+                                    ->label('Наименование'),
+                                TextInput::make('name')
+                                    ->maxLength(255)
+                                    ->label('Полное наименование'),
+                                TextInput::make('inn')
+                                    ->maxLength(50)
+                                    ->label('ИНН'),
+                                TextInput::make('phone')
+                                    ->tel()
+                                    ->maxLength(50)
+                                    ->label('Телефон'),
+                                TextInput::make('address')
+                                    ->maxLength(255)
+                                    ->label('Почтовый адрес'),
+                            ])
                             ->required()
                             ->label('Грузополучатель'),
                         TextInput::make('cargo')
