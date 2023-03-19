@@ -58,7 +58,6 @@ class ActResource extends Resource
                     ->required()
                     ->label('дата составления акта'),
                 TextInput::make('reason')
-                    ->required()
                     ->maxLength(255)
                     ->label('Основание для проведения экспертизы'),
                 Select::make('customer_id')

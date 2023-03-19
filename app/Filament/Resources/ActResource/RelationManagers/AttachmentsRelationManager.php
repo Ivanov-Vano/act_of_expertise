@@ -12,6 +12,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
 class AttachmentsRelationManager extends RelationManager
 {
@@ -33,9 +34,12 @@ class AttachmentsRelationManager extends RelationManager
                     ->maxLength(255),
                 FileUpload::make('file_path')
                     ->directory('attachments')
+//                    ->storeFileNamesIn('name')
                     ->preserveFilenames()
                     ->enableDownload()
-                    ->label('Документ'),
+                    ->label('Документ')
+                    ->reactive()
+                    ->afterStateUpdated(fn ($state, callable $set) => $set('name', 'имя файла')), //TODO вместо "Имя файла" необходимо подставить значение имени выбранного файла без расширения
             ]);
     }
 

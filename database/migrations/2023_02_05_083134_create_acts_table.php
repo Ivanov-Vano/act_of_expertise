@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('customer_id');
             $table->string('number');
             $table->date('date');
-            $table->string('reason');
+            $table->string('reason')->nullable();
             $table->float('gross');
             $table->float('netto');
             $table->enum('measure', ['кг', 'куб. м']);
