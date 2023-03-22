@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Position;
 use App\Models\Subposition;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -26,6 +27,7 @@ class SubpositionSeeder extends Seeder
                     'started_at' => $subposition['DATA'],
                     'group_position' => $subposition['position_id'],
                     'full_code' => $subposition['position_id'].' '.$subposition['SUB_POZ'],
+                    'position_id' => Position::where('code', '=', "{$subposition['position_id']}")->first()->id,
                 ]
             );
         }

@@ -51,7 +51,7 @@ class ProductsRelationManager extends RelationManager
                     ->maxLength(255),
                 Select::make('hs_code_id')
                     ->relationship('tnved_code', 'code')
-//                    ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->full_code} / {$record->name}")
+//                    ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->full_code} / {$record->tnved_code->name} {$record->name}")
                     ->preload()
                     ->searchable()
                     ->columnSpanFull()

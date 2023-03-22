@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Position;
 
 return new class extends Migration
 {
@@ -34,6 +35,10 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::table('products', function($table){
+            $table->dropForeign(['hs_code_id']);
+        });
+
         Schema::dropIfExists('subpositions');
     }
 };
