@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
             HsCodeSeeder::class,
             ProductSeeder::class,
             AttachmentSeeder::class,
+            PositionSeeder::class,
+            SubpositionSeeder::class,
         ]);
     }
 }

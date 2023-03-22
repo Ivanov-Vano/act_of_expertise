@@ -74,14 +74,15 @@ class ActController extends Controller
 
         $productsByAct = DB::query()
             ->fromSub($subProductsByAct, 'p_agg')
-            ->join('hs_codes', 'hs_codes.id', '=', 'p_agg.hs_code_id')
+//            ->join('hs_codes', 'hs_codes.id', '=', 'p_agg.hs_code_id')
+            ->join('subpositions', 'subpositions.id', '=', 'p_agg.hs_code_id')
             ->join('organizations as m', 'm.id', '=', 'p_agg.manufacturer_id')
             ->join('countries', 'countries.id', '=', 'm.country_id')
             ->join('acts', 'acts.id', '=', 'p_agg.act_id')
             ->join('organizations as c', 'c.id', '=', 'acts.customer_id')
             ->join('code_groups as cg', 'cg.id', '=', 'p_agg.code_group_id')
             ->select('product_name', 'product_brand',
-                'product_item_number', 'hs_codes.code as product_hscode',
+                'product_item_number', 'subpositions.code as product_hscode',
             'm.short_name as product_manufacturer', 'countries.short_name as product_country',
             'c.short_name as product_customer', 'cg.number as product_group', 'cg.condition as product_condition',
             'product_description')
@@ -103,7 +104,7 @@ class ActController extends Controller
 
         $criteriaByAct = DB::table('products')
             ->where('act_id', '=', $id)
-            ->join('hs_codes as hc', 'hc.id', '=', 'products.hs_code_id')
+            ->join('subpositions as hc', 'hc.id', '=', 'products.hs_code_id')
             ->groupBy('hc.code', 'origin_criterion')
             ->select(DB::raw("(substring(code, 1, 4)) as code, (substring(origin_criterion, 1, 1)) as criteria,
        case when origin_criterion='Полная' then 'полной' else 'достаточной' end as text"))

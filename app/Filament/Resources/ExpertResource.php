@@ -61,7 +61,7 @@ class ExpertResource extends Resource
             ])
             ->filters([
 /*                Tables\Filters\Filter::make('surname')
-                    ->query(fn (Builder $query): Builder => $query->like(%'surname'%)),*/
+                    ->query(fn (Builder $query): Builder => $query->like(%'surname'%))*/
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

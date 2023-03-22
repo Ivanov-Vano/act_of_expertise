@@ -23,9 +23,14 @@ class Product extends Model
         'origin_criterion',
         'description',
     ];
-    public function hscode()
+/*    public function hscode()
     {
         return $this->belongsTo(HsCode::class,'hs_code_id');
+    }*/
+
+    public function tnved_code()
+    {
+        return $this->belongsTo(Subposition::class,'hs_code_id', 'id');
     }
 
     public function code_group()

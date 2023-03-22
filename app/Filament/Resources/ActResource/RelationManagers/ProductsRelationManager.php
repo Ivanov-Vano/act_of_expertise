@@ -3,6 +3,8 @@
 namespace App\Filament\Resources\ActResource\RelationManagers;
 
 use App\Models\CodeGroup;
+use App\Models\Product;
+use App\Models\Subposition;
 use Filament\Forms;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
@@ -37,6 +39,7 @@ class ProductsRelationManager extends RelationManager
                 TextInput::make('name')
                     ->required()
                     ->label('Наименование')
+                    ->columnSpanFull()
                     ->maxLength(255),
                 TextInput::make('brand')
                     ->required()
@@ -47,9 +50,11 @@ class ProductsRelationManager extends RelationManager
                     ->label('Артикул')
                     ->maxLength(255),
                 Select::make('hs_code_id')
-                    ->relationship('hscode', 'code')
+                    ->relationship('tnved_code', 'code')
+//                    ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->full_code} / {$record->name}")
                     ->preload()
                     ->searchable()
+                    ->columnSpanFull()
                     ->label('Код ТН ВЭД'),
                 Select::make('code_group_id')
                     ->relationship('code_group', 'number')
@@ -118,10 +123,12 @@ class ProductsRelationManager extends RelationManager
                     ->label('Марка'),
                 TextColumn::make('item_number')
                     ->label('Артикул'),
-                TextColumn::make('hscode.code')
-                    ->label('Код ТН ВЭД'),
                 TextColumn::make('code_group.number')
+                    ->tooltip(fn (Model $record): string => "{$record->code_group->name}")
                     ->label('Группа ТН ВЭД'),
+                TextColumn::make('tnved_code.full_code')
+                    ->description(fn (Product $record):string => $record->tnved_code->name)
+                    ->label('Код ТН ВЭД'),
 
             ])
             ->filters([
