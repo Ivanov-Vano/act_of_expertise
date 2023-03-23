@@ -24,6 +24,10 @@ return new class extends Migration
             $table->string('full_code', 11);
             $table->date('started_at');
             $table->foreignIdFor(Position::class)->constrained()->onDelete('cascade');
+            $table->integer('position_id')->nullable();
+            $table->foreign('position_id')->references('id')->on('positions')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
             $table->timestamps();
         });
     }

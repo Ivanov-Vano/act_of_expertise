@@ -6,6 +6,8 @@ use App\Models\Position;
 use App\Models\Subposition;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class SubpositionSeeder extends Seeder
 {
@@ -16,9 +18,16 @@ class SubpositionSeeder extends Seeder
      */
     public function run()
     {
-        $path = storage_path() . "/database/data/tnved_subposition.json";
+        $path = storage_path() . "/database/data/tnved_subposition_ready.json";
         $subpositions = json_decode(file_get_contents($path), true);
         foreach ($subpositions as $subposition) {
+            try {
+                $position = Position::where('code', '=', "{$subposition['position_id']}")->oldest('id')
+                    ->firstOrFail('id')->id;
+            }
+            catch (ModelNotFoundException $e) {
+                $position = null;
+            }
             Subposition::updateOrCreate(['code' => $subposition['SUB_POZ']],
                 [
                     'group' => $subposition['GRUPPA'],
@@ -27,7 +36,7 @@ class SubpositionSeeder extends Seeder
                     'started_at' => $subposition['DATA'],
                     'group_position' => $subposition['position_id'],
                     'full_code' => $subposition['position_id'].' '.$subposition['SUB_POZ'],
-                    'position_id' => Position::where('code', '=', "{$subposition['position_id']}")->first()->id,
+                   'position_id' => $position,
                 ]
             );
         }

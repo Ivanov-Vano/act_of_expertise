@@ -30,7 +30,7 @@ class Product extends Model
 
     public function tnved_code()
     {
-        return $this->belongsTo(Subposition::class,'hs_code_id', 'id');
+        return $this->belongsTo(Subposition::class,'hs_code_id', 'id')->withDefault();
     }
 
     public function code_group()

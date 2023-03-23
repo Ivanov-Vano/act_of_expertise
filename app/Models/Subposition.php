@@ -23,7 +23,7 @@ class Subposition extends Model
 
     public function position(): BelongsTo
     {
-        return $this->belongsTo(Position::class, 'position_id');
+        return $this->belongsTo(Position::class, 'position_id')->withDefault();
     }
 
     public function getTnVedCodeExt()
