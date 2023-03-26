@@ -23,11 +23,8 @@ return new class extends Migration
             $table->string('group_position', 4);
             $table->string('full_code', 11);
             $table->date('started_at');
-            $table->foreignIdFor(Position::class)->constrained()->onDelete('cascade');
-            $table->integer('position_id')->nullable();
-            $table->foreign('position_id')->references('id')->on('positions')
-                ->onUpdate('cascade')
-                ->onDelete('set null');
+            $table->foreignId('position_id')->nullable();
+            $table->foreign('position_id')->references('id')->on('positions');
             $table->timestamps();
         });
     }
@@ -39,9 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('products', function($table){
-            $table->dropForeign(['hs_code_id']);
-        });
 
         Schema::dropIfExists('subpositions');
     }

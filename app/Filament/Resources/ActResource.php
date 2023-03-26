@@ -243,9 +243,16 @@ class ActResource extends Resource
                             ])
                             ->required()
                             ->label('Грузополучатель'),
-                        TextInput::make('cargo')
+                        Select::make('transport_id')
+                            ->relationship('transport', 'name')
+                            ->required()
                             ->columnSpanFull()
-                            ->label('Транспортное средство'),
+                            ->label('Транспортное средство')
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->required()
+                                    ->label('Наименование'),
+                            ]),
                         TextInput::make('package')
                             ->columnSpanFull()
                             ->label('Вид упаковки'),

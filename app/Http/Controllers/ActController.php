@@ -68,21 +68,21 @@ class ActController extends Controller
             ->where('act_id', '=', $id)
             ->select(DB::raw('group_concat(name) as product_name, group_concat(brand) as product_brand,
                 group_concat(item_number) as product_item_number, group_concat(products.description) as product_description'),
-                'hs_code_id', 'code_group_id', 'act_id', 'manufacturer_id')
-            ->groupBy('hs_code_id', 'code_group_id', 'act_id', 'manufacturer_id')
+                'subposition_id', 'code_group_id', 'act_id', 'manufacturer_id')
+            ->groupBy('subposition_id', 'code_group_id', 'act_id', 'manufacturer_id')
             ->limit(20);
 
         $productsByAct = DB::query()
             ->fromSub($subProductsByAct, 'p_agg')
 //            ->join('hs_codes', 'hs_codes.id', '=', 'p_agg.hs_code_id')
-            ->join('subpositions', 'subpositions.id', '=', 'p_agg.hs_code_id')
+            ->join('subpositions', 'subpositions.id', '=', 'p_agg.subposition_id')
             ->join('organizations as m', 'm.id', '=', 'p_agg.manufacturer_id')
             ->join('countries', 'countries.id', '=', 'm.country_id')
             ->join('acts', 'acts.id', '=', 'p_agg.act_id')
             ->join('organizations as c', 'c.id', '=', 'acts.customer_id')
             ->join('code_groups as cg', 'cg.id', '=', 'p_agg.code_group_id')
             ->select('product_name', 'product_brand',
-                'product_item_number', 'subpositions.code as product_hscode',
+                'product_item_number', 'subpositions.full_code as product_hscode',
             'm.short_name as product_manufacturer', 'countries.short_name as product_country',
             'c.short_name as product_customer', 'cg.number as product_group', 'cg.condition as product_condition',
             'product_description')
@@ -104,9 +104,9 @@ class ActController extends Controller
 
         $criteriaByAct = DB::table('products')
             ->where('act_id', '=', $id)
-            ->join('subpositions as hc', 'hc.id', '=', 'products.hs_code_id')
-            ->groupBy('hc.code', 'origin_criterion')
-            ->select(DB::raw("(substring(code, 1, 4)) as code, (substring(origin_criterion, 1, 1)) as criteria,
+            ->join('subpositions as sp', 'sp.id', '=', 'products.subposition_id')
+            ->groupBy('sp.full_code', 'origin_criterion')
+            ->select(DB::raw("(substring(full_code, 1, 4)) as code, (substring(origin_criterion, 1, 1)) as criteria,
        case when origin_criterion='Полная' then 'полной' else 'достаточной' end as text"))
             ->get();
         $criteria = $criteriaByAct->toArray();
@@ -122,7 +122,7 @@ class ActController extends Controller
         $templateProcessor->setValue('date', $myDateTime->format('d.m.Y'));
         $templateProcessor->setValue('reason', $act->reason);
 
-        $templateProcessor->setValue('customer_name', $act->customer->short_name);
+        $templateProcessor->setValue('customer_name', $act->customer->name);
         $templateProcessor->setValue('customer_inn', $act->customer->inn);
         $templateProcessor->setValue('customer_address', $act->customer->address);
 
@@ -136,29 +136,29 @@ class ActController extends Controller
         $templateProcessor->setValue('contract', $act->contract);
         $templateProcessor->setValue('invoice', $act->invoice);
 
-        $templateProcessor->setValue('exporter_name', $act->exporter->short_name);
+        $templateProcessor->setValue('exporter_name', $act->exporter->name);
         $templateProcessor->setValue('exporter_inn', $act->exporter->inn);
         $templateProcessor->setValue('exporter_address', $act->exporter->address);
         $templateProcessor->setValue('exporter_country', $act->exporter->country->short_name);
 
-        $templateProcessor->setValue('shipper_name', $act->shipper->short_name);
+        $templateProcessor->setValue('shipper_name', $act->shipper->name);
         $templateProcessor->setValue('shipper_inn', $act->shipper->inn);
         $templateProcessor->setValue('shipper_address', $act->shipper->address);
         $templateProcessor->setValue('shipper_country', $act->shipper->country->short_name);
 
         $templateProcessor->cloneBlock('block_manufacturer', 0, true, false, $manufacturers);
 
-        $templateProcessor->setValue('importer_name', $act->importer->short_name);
+        $templateProcessor->setValue('importer_name', $act->importer->name);
         $templateProcessor->setValue('importer_inn', $act->importer->inn);
         $templateProcessor->setValue('importer_address', $act->importer->address);
         $templateProcessor->setValue('importer_country', $act->importer->country->short_name);
 
-        $templateProcessor->setValue('consignee_name', $act->consignee->short_name);
+        $templateProcessor->setValue('consignee_name', $act->consignee->name);
         $templateProcessor->setValue('consignee_inn', $act->consignee->inn);
         $templateProcessor->setValue('consignee_address', $act->consignee->address);
         $templateProcessor->setValue('consignee_country', $act->consignee->country->short_name);
 
-        $templateProcessor->setValue('cargo', $act->cargo);
+        $templateProcessor->setValue('cargo', $act->transport->name);
         $templateProcessor->setValue('package', $act->package);
 
 

@@ -49,7 +49,7 @@ class ProductsRelationManager extends RelationManager
                     ->required()
                     ->label('Артикул')
                     ->maxLength(255),
-                Select::make('hs_code_id')
+                Select::make('subposition_id')
                     ->relationship('tnved_code', 'code')
                     ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->full_code} / {$record->position->name} {$record->name}")
                     ->preload()

@@ -12,6 +12,10 @@ class Act extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable =[
+        'expert_id',
+        'type_act_id',
+        'customer_id',
+        'number',
         'date',
         'reason',
         'gross',
@@ -26,15 +30,18 @@ class Act extends Model
         'consignee_id',
         'cargo',
         'package',
-        'number',
-        'customer_id',
-        'type_act_id',
-        'expert_id',
+        'description',
+        'transport_id',
     ];
 
     public function expert():BelongsTo
     {
         return $this->belongsTo(Expert::class);
+    }
+
+    public function transport():BelongsTo
+    {
+        return $this->belongsTo(Transport::class);
     }
 
     public function type(): BelongsTo

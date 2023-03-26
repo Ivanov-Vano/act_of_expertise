@@ -11,26 +11,23 @@ class Product extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable =[
-        'hs_code_id',
+        'act_id',
         'name',
         'brand',
-        'item_number',
-        'code_group_id',
         'manufacturer_id',
+        'item_number',
         'gross',
         'netto',
         'measure',
         'origin_criterion',
         'description',
+        'code_group_id',
+        'subposition_id',
     ];
-/*    public function hscode()
-    {
-        return $this->belongsTo(HsCode::class,'hs_code_id');
-    }*/
 
     public function tnved_code()
     {
-        return $this->belongsTo(Subposition::class,'hs_code_id', 'id')->withDefault();
+        return $this->belongsTo(Subposition::class,'subposition_id')->withDefault();
     }
 
     public function code_group()

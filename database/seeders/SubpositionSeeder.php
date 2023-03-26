@@ -18,7 +18,7 @@ class SubpositionSeeder extends Seeder
      */
     public function run()
     {
-        $path = storage_path() . "/database/data/tnved_subposition_ready.json";
+        $path = storage_path() . "/database/data/tnved_subposition.json";
         $subpositions = json_decode(file_get_contents($path), true);
         foreach ($subpositions as $subposition) {
             try {
