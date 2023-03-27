@@ -13,6 +13,7 @@ use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
+use Closure;
 
 class AttachmentsRelationManager extends RelationManager
 {
@@ -29,17 +30,19 @@ class AttachmentsRelationManager extends RelationManager
         return $form
             ->schema([
                 TextInput::make('name')
-                    ->required()
                     ->label('Наименование')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->placeholder('При создании приложения, имя генерируется автоматически при нажатии кнопки "Создать"'),
                 FileUpload::make('file_path')
                     ->directory('attachments')
-//                    ->storeFileNamesIn('name')
                     ->preserveFilenames()
                     ->enableDownload()
                     ->label('Документ')
-                    ->reactive()
-                    ->afterStateUpdated(fn ($state, callable $set) => $set('name', 'имя файла')), //TODO вместо "Имя файла" необходимо подставить значение имени выбранного файла без расширения
+                    ->storeFileNamesIn('name'),
+//                    ->afterStateUpdated(fn ($state, callable $set) => $set('name', $state)), //TODO вместо "Имя файла" необходимо подставить значение имени выбранного файла без расширения
+/*                    ->afterStateUpdated(function (Closure $set, $state) {
+                      $set('name',  $state);
+                    })*/
             ]);
     }
 
