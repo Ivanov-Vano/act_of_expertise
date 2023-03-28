@@ -10,10 +10,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Str;
-use Closure;
+use Filament\Pages\Actions\CreateAction;
 
 class AttachmentsRelationManager extends RelationManager
 {
@@ -24,6 +21,7 @@ class AttachmentsRelationManager extends RelationManager
     protected static ?string $modelLabel = 'приложение';
 
     protected static ?string $pluralModelLabel = 'приложения';
+
 
     public static function form(Form $form): Form
     {
@@ -37,12 +35,7 @@ class AttachmentsRelationManager extends RelationManager
                     ->directory('attachments')
                     ->preserveFilenames()
                     ->enableDownload()
-                    ->label('Документ')
-                    ->storeFileNamesIn('name'),
-//                    ->afterStateUpdated(fn ($state, callable $set) => $set('name', $state)), //TODO вместо "Имя файла" необходимо подставить значение имени выбранного файла без расширения
-/*                    ->afterStateUpdated(function (Closure $set, $state) {
-                      $set('name',  $state);
-                    })*/
+                    ->label('Документ'),
             ]);
     }
 
@@ -57,7 +50,12 @@ class AttachmentsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make()
+                    //при сохранении записи подставляем имя файла в поле наименование
+                    ->mutateFormDataUsing(function (array $data): array {
+                        $data['name'] = pathinfo($data['file_path'], PATHINFO_FILENAME);
+                        return $data;
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -68,3 +66,4 @@ class AttachmentsRelationManager extends RelationManager
             ]);
     }
 }
+
