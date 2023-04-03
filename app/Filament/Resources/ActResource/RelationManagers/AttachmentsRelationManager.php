@@ -10,7 +10,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
-use Filament\Pages\Actions\CreateAction;
+//use Filament\Pages\Actions\CreateAction;
 
 class AttachmentsRelationManager extends RelationManager
 {
@@ -50,7 +50,7 @@ class AttachmentsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                CreateAction::make()
+                Tables\Actions\CreateAction::make()
                     //при сохранении записи подставляем имя файла в поле наименование
                     ->mutateFormDataUsing(function (array $data): array {
                         $data['name'] = pathinfo($data['file_path'], PATHINFO_FILENAME);
