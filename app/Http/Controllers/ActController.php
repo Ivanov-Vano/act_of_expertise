@@ -94,7 +94,7 @@ class ActController extends Controller
             ->where('act_id', '=', $id)
             ->join('organizations', 'organizations.id', '=', 'products.manufacturer_id')
             ->join('countries', 'countries.id', '=', 'organizations.country_id')
-            ->select('organizations.short_name as manufacturer_name', 'organizations.inn as manufacturer_inn',
+            ->select('organizations.name as manufacturer_name', 'organizations.inn as manufacturer_inn',
                 'organizations.address as manufacturer_address', 'countries.short_name as manufacturer_country')
             ->groupBy('products.manufacturer_id')
             ->get();

@@ -79,7 +79,7 @@ class ProductsRelationManager extends RelationManager
                     ->columnSpanFull()
                     ->label('Изготовитель'),
                 Radio::make('origin_criterion')
-                    ->options(['Полная' => 'полная', 'Достаточная' => 'достаточная'])
+                    ->options(['Полная' => 'полностью произведен', 'Достаточная' => 'достаточная обработка'])
                     ->inline()
                     ->required()
                     ->label('Критерий происхождения'),
