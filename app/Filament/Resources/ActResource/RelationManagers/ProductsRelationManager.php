@@ -42,11 +42,9 @@ class ProductsRelationManager extends RelationManager
                     ->columnSpanFull()
                     ->maxLength(255),
                 TextInput::make('brand')
-                    ->required()
                     ->label('Марка')
                     ->maxLength(255),
                 TextInput::make('item_number')
-                    ->required()
                     ->label('Артикул')
                     ->maxLength(255),
                 Select::make('subposition_id')
