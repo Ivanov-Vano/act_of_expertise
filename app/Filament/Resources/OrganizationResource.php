@@ -56,7 +56,7 @@ class OrganizationResource extends Resource
                     ->label('Телефон'),
                 TextInput::make('address')
                     ->maxLength(255)
-                    ->label('Почтовый адрес'),
+                    ->label('Юридический адрес'),
             ]);
     }
 

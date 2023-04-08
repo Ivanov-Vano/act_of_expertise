@@ -60,7 +60,7 @@ class ProductsRelationManager extends RelationManager
                                             ->orderBy('id'))*/
                     ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->number} / {$record->name}")
                     ->required()
-                    ->label('Группа ТН ВЭД')
+                    ->label('Правила')
                     ->searchable()
                     ->columnSpanFull()
                     ->preload(),
@@ -75,6 +75,29 @@ class ProductsRelationManager extends RelationManager
                     ->searchable()
                     ->preload()
                     ->columnSpanFull()
+                    ->createOptionForm([
+                        Select::make('country_id')
+                            ->relationship('country', 'short_name')
+                            ->required()
+                            ->label('Страна'),
+                        TextInput::make('short_name')
+                            ->maxLength(100)
+                            ->required()
+                            ->label('Наименование'),
+                        TextInput::make('name')
+                            ->maxLength(255)
+                            ->label('Полное наименование'),
+                        TextInput::make('inn')
+                            ->maxLength(50)
+                            ->label('ИНН'),
+                        TextInput::make('phone')
+                            ->tel()
+                            ->maxLength(50)
+                            ->label('Телефон'),
+                        TextInput::make('address')
+                            ->maxLength(255)
+                            ->label('Юридический адрес'),
+                    ])
                     ->label('Изготовитель'),
                 Radio::make('origin_criterion')
                     ->options(['Полная' => 'полностью произведен', 'Достаточная' => 'достаточная обработка'])
