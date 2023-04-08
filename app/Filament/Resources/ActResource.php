@@ -84,7 +84,7 @@ class ActResource extends Resource
                             ->label('Телефон'),
                         TextInput::make('address')
                             ->maxLength(255)
-                            ->label('Почтовый адрес'),
+                            ->label('Юридический адрес'),
                     ])
                     ->required()
                     ->label('Заказчик экспертизы'),
@@ -151,7 +151,7 @@ class ActResource extends Resource
                                     ->label('Телефон'),
                                 TextInput::make('address')
                                     ->maxLength(255)
-                                    ->label('Почтовый адрес'),
+                                    ->label('Юридический адрес'),
                             ])
                             ->required()
                             ->label('Экспортер'),
@@ -181,7 +181,7 @@ class ActResource extends Resource
                                     ->label('Телефон'),
                                 TextInput::make('address')
                                     ->maxLength(255)
-                                    ->label('Почтовый адрес'),
+                                    ->label('Юридический адрес'),
                             ])
                             ->label('Грузоотправитель'),
                         Select::make('importer_id')
@@ -210,7 +210,7 @@ class ActResource extends Resource
                                     ->label('Телефон'),
                                 TextInput::make('address')
                                     ->maxLength(255)
-                                    ->label('Почтовый адрес'),
+                                    ->label('Юридический адрес'),
                             ])
                             ->label('Импортер'),
                         Select::make('consignee_id')
@@ -238,7 +238,7 @@ class ActResource extends Resource
                                     ->label('Телефон'),
                                 TextInput::make('address')
                                     ->maxLength(255)
-                                    ->label('Почтовый адрес'),
+                                    ->label('Юридический адрес'),
                             ])
                             ->required()
                             ->label('Грузополучатель'),

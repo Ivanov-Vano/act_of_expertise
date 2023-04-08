@@ -18,9 +18,9 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Act::class)->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->string('brand');
+            $table->string('brand')->nullable();
             $table->integer('manufacturer_id');
-            $table->string('item_number');
+            $table->string('item_number')->nullable();
             $table->float('gross');
             $table->float('netto');
             $table->enum('measure', ['кг', 'куб. м']);
