@@ -50,7 +50,9 @@ class PositionResource extends Resource
                     ->tooltip(fn (Model $record): string => "{$record->name}")
                     ->searchable(),
                 TextColumn::make('started_at')
-                    ->date()->sortable()->label('Дата начала действия'),
+                    ->date('d.m.Y')
+                    ->sortable()
+                    ->label('Дата начала действия'),
             ])
             ->filters([
                 //
