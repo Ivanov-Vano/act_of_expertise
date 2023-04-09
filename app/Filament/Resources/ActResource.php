@@ -53,9 +53,14 @@ class ActResource extends Resource
                     //->relationship('expert', 'surname')
                     ->required()
                     ->label('Эксперт'),
-                DatePicker::make('date')
+                TextInput::make('date')
                     ->required()
+                    ->type('date')
                     ->label('дата составления акта'),
+/*                DatePicker::make('date')
+                    ->required()
+                    ->displayFormat('d.m.Y')
+                    ->label('дата составления акта'),*/
                 TextInput::make('reason')
                     ->maxLength(255)
                     ->label('Основание для проведения экспертизы'),
@@ -270,9 +275,14 @@ class ActResource extends Resource
                 TextColumn::make('customer.short_name')->sortable()->label('Заказчик')
                     ->searchable(),
                 TextColumn::make('date')
-                    ->date()->sortable()->label('Дата составления'),
+//                    ->date()
+                    ->date('d.m.Y')
+                    ->sortable()
+                    ->label('Дата составления'),
                 TextColumn::make('created_at')
-                    ->dateTime()->sortable()->label('Создан'),
+                    ->dateTime('d.m.Y H:i:s')
+                    ->sortable()
+                    ->label('Создан'),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
