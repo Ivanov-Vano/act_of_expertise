@@ -41,6 +41,10 @@ class ActPolicy
      */
     public function create(User $user)
     {
+/*        if ($user->hasRole('Admin') || $user->hasPermissionTo('Create Acts')) {
+            return true;
+        }
+        return false;*/
         return true;
     }
 

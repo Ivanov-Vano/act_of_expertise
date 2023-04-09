@@ -2,11 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Expert;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ExpertPolicy
+class UserPolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +17,19 @@ class ExpertPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->hasRole('Администратор');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Expert  $expert
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Expert $expert)
+    public function view(User $user, User $model)
     {
-        return true;
+        return $user->hasRole('Администратор');
     }
 
     /**
@@ -48,10 +47,10 @@ class ExpertPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Expert  $expert
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Expert $expert)
+    public function update(User $user, User $model)
     {
         return $user->hasRole('Администратор');
     }
@@ -60,10 +59,10 @@ class ExpertPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Expert  $expert
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Expert $expert)
+    public function delete(User $user, User $model)
     {
         return $user->hasRole('Администратор');
     }
@@ -72,10 +71,10 @@ class ExpertPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Expert  $expert
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Expert $expert)
+    public function restore(User $user, User $model)
     {
         return $user->hasRole('Администратор');
     }
@@ -84,10 +83,10 @@ class ExpertPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Expert  $expert
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Expert $expert)
+    public function forceDelete(User $user, User $model)
     {
         return $user->hasRole('Администратор');
     }
