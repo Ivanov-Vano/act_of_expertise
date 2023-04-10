@@ -14,6 +14,12 @@ class CreateUser extends CreateRecord
     {
         return 'Создан новый пользователь';
     }
+/*    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['name'] = $data['username'];
+
+        return $data;
+    }*/
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');

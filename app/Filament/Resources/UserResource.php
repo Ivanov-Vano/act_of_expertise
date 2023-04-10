@@ -38,18 +38,19 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
+                TextInput::make('username')
                     ->required()
-                    ->label('Имя')
+                    ->placeholder('Допустимы русские и английские символы')
+                    ->label('Логин')
                     ->unique(ignoreRecord: true)
                     ->minLength(2)
                     ->maxLength(255),
-                TextInput::make('email')
+/*                TextInput::make('email')
                     ->placeholder('Введите почту для входа в приложение')
                     ->email()
                     ->required()
                     ->label('Эл. почта')
-                    ->unique(ignoreRecord: true),
+                    ->unique(ignoreRecord: true),*/
 //                DateTimePicker::make('email_verified_at'),
                 TextInput::make('password')
                     ->label('Пароль')
@@ -62,7 +63,12 @@ class UserResource extends Resource
                     ->label('Роли')
                     ->multiple()
                     ->preload()
-                    ->relationship('roles', 'name')
+                    ->relationship('roles', 'name'),
+                Select::make('expert_id')
+                    ->label('Эксперты')
+                    ->preload()
+                    ->relationship('expert', 'full_name')
+
 
             ]);
     }
@@ -71,7 +77,7 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
+                TextColumn::make('username')
                     ->label('Имя пользователя'),
 /*                Tables\Columns\TextColumn::make('email'),
                 Tables\Columns\TextColumn::make('email_verified_at')

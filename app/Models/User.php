@@ -22,9 +22,12 @@ class User extends Authenticatable implements FilamentUser, HasName
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
+/*        'name',
+        'email',*/
+        'username',
         'password',
+        'expert_id',
+
     ];
 
     /**
@@ -45,6 +48,11 @@ class User extends Authenticatable implements FilamentUser, HasName
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function expert()
+    {
+        return $this->belongsTo(Expert::class, 'expert_id')->withDefault();
+    }
 
     public function canAccessFilament(): bool
     {
