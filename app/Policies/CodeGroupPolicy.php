@@ -18,7 +18,7 @@ class CodeGroupPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('любой просмотр: правило');
+        return $user->hasPermissionTo('просмотр всех: правило');
     }
 
     /**

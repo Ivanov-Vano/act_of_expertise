@@ -18,7 +18,7 @@ class ProductPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('любой просмотр: товар');
+        return $user->hasPermissionTo('просмотр всех: товар');
     }
 
     /**

@@ -18,7 +18,7 @@ class TypeActPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('просмотр всех: тип акта');
+       return $user->hasPermissionTo('просмотр всех: тип акта');
     }
 
     /**

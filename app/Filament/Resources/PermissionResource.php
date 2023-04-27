@@ -47,6 +47,7 @@ class PermissionResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->searchable()
                     ->label('Наименование')
             ])
             ->filters([

@@ -18,7 +18,7 @@ class PositionPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('любой просмотр: товарная позиция');
+        return $user->hasPermissionTo('просмотр всех: товарная позиция');
     }
 
     /**

@@ -18,7 +18,7 @@ class AttachmentPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('любой просмотр: приложение');
+        return $user->hasPermissionTo('просмотр всех: приложение');
     }
 
     /**

@@ -18,7 +18,7 @@ class ActPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('любой просмотр: акт экспертизы');
+        return $user->hasPermissionTo('просмотр всех: акт экспертизы');
     }
 
     /**

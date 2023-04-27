@@ -18,7 +18,7 @@ class ExpertPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('любой просмотр: эксперт');
+        return $user->hasPermissionTo('просмотр всех: эксперт');
     }
 
     /**

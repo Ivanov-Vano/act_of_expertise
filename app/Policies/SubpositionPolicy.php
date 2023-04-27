@@ -18,7 +18,7 @@ class SubpositionPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('любой просмотр: товарная подпозиция');
+        return $user->hasPermissionTo('просмотр всех: товарная подпозиция');
     }
 
     /**

@@ -4,10 +4,12 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Support\Str;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\PermissionRegistrar;
+use App\Models\Role;
+use App\Models\Permission;
+
 
 class RolesAndPermissionsSeeder extends Seeder
 {
@@ -28,7 +30,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $miscPermission = Permission::create(['name' => 'N/A']);
 
         //Act model
-        $actPermission1 = Permission::create(['name' => 'любой просмотр: акт экспертизы']);
+        $actPermission1 = Permission::create(['name' => 'просмотр всех: акт экспертизы']);
         $actPermission2 = Permission::create(['name' => 'просмотр: акт экспертизы']);
         $actPermission3 = Permission::create(['name' => 'создание: акт экспертизы']);
         $actPermission4 = Permission::create(['name' => 'изменение: акт экспертизы']);
@@ -37,7 +39,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $actPermission7 = Permission::create(['name' => 'безвозвратное удаление: акт экспертизы']);
 
         //Attachment model
-        $attachmentPermission1 = Permission::create(['name' => 'любой просмотр: приложение']);
+        $attachmentPermission1 = Permission::create(['name' => 'просмотр всех: приложение']);
         $attachmentPermission2 = Permission::create(['name' => 'просмотр: приложение']);
         $attachmentPermission3 = Permission::create(['name' => 'создание: приложение']);
         $attachmentPermission4 = Permission::create(['name' => 'изменение: приложение']);
@@ -46,7 +48,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $attachmentPermission7 = Permission::create(['name' => 'безвозвратное удаление: приложение']);
 
         //CodeGroup model
-        $codeGroupPermission1 = Permission::create(['name' => 'любой просмотр: правило']);
+        $codeGroupPermission1 = Permission::create(['name' => 'просмотр всех: правило']);
         $codeGroupPermission2 = Permission::create(['name' => 'просмотр: правило']);
         $codeGroupPermission3 = Permission::create(['name' => 'создание: правило']);
         $codeGroupPermission4 = Permission::create(['name' => 'изменение: правило']);
@@ -55,7 +57,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $codeGroupPermission7 = Permission::create(['name' => 'безвозвратное удаление: правило']);
 
         //Expert model
-        $expertPermission1 = Permission::create(['name' => 'любой просмотр: эксперт']);
+        $expertPermission1 = Permission::create(['name' => 'просмотр всех: эксперт']);
         $expertPermission2 = Permission::create(['name' => 'просмотр: эксперт']);
         $expertPermission3 = Permission::create(['name' => 'создание: эксперт']);
         $expertPermission4 = Permission::create(['name' => 'изменение: эксперт']);
@@ -64,7 +66,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $expertPermission7 = Permission::create(['name' => 'безвозвратное удаление: эксперт']);
 
         //Organization model
-        $organizationPermission1 = Permission::create(['name' => 'любой просмотр: организация']);
+        $organizationPermission1 = Permission::create(['name' => 'просмотр всех: организация']);
         $organizationPermission2 = Permission::create(['name' => 'просмотр: организация']);
         $organizationPermission3 = Permission::create(['name' => 'создание: организация']);
         $organizationPermission4 = Permission::create(['name' => 'изменение: организация']);
@@ -73,7 +75,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $organizationPermission7 = Permission::create(['name' => 'безвозвратное удаление: организация']);
 
         //Position model
-        $positionPermission1 = Permission::create(['name' => 'любой просмотр: товарная позиция']);
+        $positionPermission1 = Permission::create(['name' => 'просмотр всех: товарная позиция']);
         $positionPermission2 = Permission::create(['name' => 'просмотр: товарная позиция']);
         $positionPermission3 = Permission::create(['name' => 'создание: товарная позиция']);
         $positionPermission4 = Permission::create(['name' => 'изменение: товарная позиция']);
@@ -82,7 +84,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $positionPermission7 = Permission::create(['name' => 'безвозвратное удаление: товарная позиция']);
 
         //Product model
-        $productPermission1 = Permission::create(['name' => 'любой просмотр: товар']);
+        $productPermission1 = Permission::create(['name' => 'просмотр всех: товар']);
         $productPermission2 = Permission::create(['name' => 'просмотр: товар']);
         $productPermission3 = Permission::create(['name' => 'создание: товар']);
         $productPermission4 = Permission::create(['name' => 'изменение: товар']);
@@ -91,7 +93,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $productPermission7 = Permission::create(['name' => 'безвозвратное удаление: товар']);
 
         //Subposition model
-        $subpositionPermission1 = Permission::create(['name' => 'любой просмотр: товарная подпозиция']);
+        $subpositionPermission1 = Permission::create(['name' => 'просмотр всех: товарная подпозиция']);
         $subpositionPermission2 = Permission::create(['name' => 'просмотр: товарная подпозиция']);
         $subpositionPermission3 = Permission::create(['name' => 'создание: товарная подпозиция']);
         $subpositionPermission4 = Permission::create(['name' => 'изменение: товарная подпозиция']);
@@ -100,7 +102,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $subpositionPermission7 = Permission::create(['name' => 'безвозвратное удаление: товарная подпозиция']);
 
         //TypeAct model
-        $typeActPermission1 = Permission::create(['name' => 'любой просмотр: тип акта']);
+        $typeActPermission1 = Permission::create(['name' => 'просмотр всех: тип акта']);
         $typeActPermission2 = Permission::create(['name' => 'просмотр: тип акта']);
         $typeActPermission3 = Permission::create(['name' => 'создание: тип акта']);
         $typeActPermission4 = Permission::create(['name' => 'изменение: тип акта']);
@@ -135,7 +137,72 @@ class RolesAndPermissionsSeeder extends Seeder
             $productPermission6,
             $productPermission7,
         ]);
-        $adminRole = Role::create(['name' => 'Администратор'])->givePermissionsTo(Permission::all());
+        $adminRole = Role::create(['name' => 'Администратор'])->syncPermissions([
+            $actPermission1,
+            $actPermission2,
+            $actPermission3,
+            $actPermission4,
+            $actPermission5,
+            $actPermission6,
+            $actPermission7,
+            $actPermission1,
+            $attachmentPermission1,
+            $attachmentPermission2,
+            $attachmentPermission3,
+            $attachmentPermission4,
+            $attachmentPermission5,
+            $attachmentPermission6,
+            $attachmentPermission7,
+            $codeGroupPermission1,
+            $codeGroupPermission2,
+            $codeGroupPermission3,
+            $codeGroupPermission4,
+            $codeGroupPermission5,
+            $codeGroupPermission6,
+            $codeGroupPermission7,
+            $expertPermission1,
+            $expertPermission2,
+            $expertPermission3,
+            $expertPermission4,
+            $expertPermission5,
+            $expertPermission6,
+            $expertPermission7,
+            $organizationPermission1,
+            $organizationPermission2,
+            $organizationPermission3,
+            $organizationPermission4,
+            $organizationPermission5,
+            $organizationPermission6,
+            $organizationPermission7,
+            $positionPermission1,
+            $positionPermission2,
+            $positionPermission3,
+            $positionPermission4,
+            $positionPermission5,
+            $positionPermission6,
+            $positionPermission7,
+            $productPermission1,
+            $productPermission2,
+            $productPermission3,
+            $productPermission4,
+            $productPermission5,
+            $productPermission6,
+            $productPermission7,
+            $subpositionPermission1,
+            $subpositionPermission2,
+            $subpositionPermission3,
+            $subpositionPermission4,
+            $subpositionPermission5,
+            $subpositionPermission6,
+            $subpositionPermission7,
+            $typeActPermission1,
+            $typeActPermission2,
+            $typeActPermission3,
+            $typeActPermission4,
+            $typeActPermission5,
+            $typeActPermission6,
+            $typeActPermission7,
+        ]);
 
         User::create([
             'username' => 'administrator',

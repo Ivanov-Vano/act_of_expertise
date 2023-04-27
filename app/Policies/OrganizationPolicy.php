@@ -18,7 +18,7 @@ class OrganizationPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('любой просмотр: организация');
+        return $user->hasPermissionTo('просмотр всех: организация');
     }
 
     /**
