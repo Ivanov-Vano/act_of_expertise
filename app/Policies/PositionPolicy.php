@@ -18,7 +18,7 @@ class PositionPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->hasPermissionTo('любой просмотр: товарная позиция');
     }
 
     /**
@@ -30,7 +30,7 @@ class PositionPolicy
      */
     public function view(User $user, Position $position)
     {
-        return true;
+        return $user->hasPermissionTo('просмотр: товарная позиция');
     }
 
     /**
@@ -41,7 +41,7 @@ class PositionPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('Администратор');
+        return $user->hasPermissionTo('создание: товарная позиция');
     }
 
     /**
@@ -53,7 +53,7 @@ class PositionPolicy
      */
     public function update(User $user, Position $position)
     {
-        return $user->hasRole('Администратор');
+        return $user->hasPermissionTo('изменение: товарная позиция');
     }
 
     /**
@@ -65,7 +65,7 @@ class PositionPolicy
      */
     public function delete(User $user, Position $position)
     {
-        return $user->hasRole('Администратор');
+        return $user->hasPermissionTo('удаление: товарная позиция');
     }
 
     /**
@@ -77,7 +77,7 @@ class PositionPolicy
      */
     public function restore(User $user, Position $position)
     {
-        return $user->hasRole('Администратор');
+        return $user->hasPermissionTo('восстановление: товарная позиция');
     }
 
     /**
@@ -89,6 +89,6 @@ class PositionPolicy
      */
     public function forceDelete(User $user, Position $position)
     {
-        return $user->hasRole('Администратор');
+        return $user->hasPermissionTo('безвозвратное удаление: товарная позиция');
     }
 }

@@ -18,7 +18,7 @@ class TypeActPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole('Администратор');
+        return $user->hasPermissionTo('просмотр всех: тип акта');
     }
 
     /**
@@ -30,7 +30,7 @@ class TypeActPolicy
      */
     public function view(User $user, TypeAct $typeAct)
     {
-        return $user->hasRole('Администратор');
+        return $user->hasPermissionTo('просмотр: тип акта');
     }
 
     /**
@@ -41,7 +41,7 @@ class TypeActPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('Администратор');
+        return $user->hasPermissionTo('создание: тип акта');
     }
 
     /**
@@ -53,7 +53,7 @@ class TypeActPolicy
      */
     public function update(User $user, TypeAct $typeAct)
     {
-        return $user->hasRole('Администратор');
+        return $user->hasPermissionTo('изменение: тип акта');
     }
 
     /**
@@ -65,7 +65,7 @@ class TypeActPolicy
      */
     public function delete(User $user, TypeAct $typeAct)
     {
-        return $user->hasRole('Администратор');
+        return $user->hasPermissionTo('удаление: тип акта');
     }
 
     /**
@@ -77,7 +77,7 @@ class TypeActPolicy
      */
     public function restore(User $user, TypeAct $typeAct)
     {
-        return $user->hasRole('Администратор');
+        return $user->hasPermissionTo('восстановление: тип акта');
     }
 
     /**
@@ -89,6 +89,6 @@ class TypeActPolicy
      */
     public function forceDelete(User $user, TypeAct $typeAct)
     {
-        return $user->hasRole('Администратор');
+        return $user->hasPermissionTo('безвозвратное удаление: тип акта');
     }
 }

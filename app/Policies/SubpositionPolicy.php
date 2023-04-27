@@ -18,7 +18,7 @@ class SubpositionPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->hasPermissionTo('любой просмотр: товарная подпозиция');
     }
 
     /**
@@ -30,7 +30,7 @@ class SubpositionPolicy
      */
     public function view(User $user, Subposition $subposition)
     {
-        return true;
+        return $user->hasPermissionTo('любой просмотр: товарная подпозиция');
     }
 
     /**
@@ -41,7 +41,7 @@ class SubpositionPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('Администратор');
+        return $user->hasPermissionTo('создание: товарная подпозиция');
     }
 
     /**
@@ -53,7 +53,7 @@ class SubpositionPolicy
      */
     public function update(User $user, Subposition $subposition)
     {
-        return $user->hasRole('Администратор');
+        return $user->hasPermissionTo('изменение: товарная подпозиция');
     }
 
     /**
@@ -65,7 +65,7 @@ class SubpositionPolicy
      */
     public function delete(User $user, Subposition $subposition)
     {
-        return $user->hasRole('Администратор');
+        return $user->hasPermissionTo('удаление: товарная подпозиция');
     }
 
     /**
@@ -77,7 +77,7 @@ class SubpositionPolicy
      */
     public function restore(User $user, Subposition $subposition)
     {
-        return $user->hasRole('Администратор');
+        return $user->hasPermissionTo('восстановление: товарная подпозиция');
     }
 
     /**
@@ -89,6 +89,6 @@ class SubpositionPolicy
      */
     public function forceDelete(User $user, Subposition $subposition)
     {
-        return $user->hasRole('Администратор');
+        return $user->hasPermissionTo('безвозвратное удаление: товарная подпозиция');
     }
 }

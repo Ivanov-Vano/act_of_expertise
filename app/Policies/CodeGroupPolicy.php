@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Organization;
+use App\Models\CodeGroup;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class OrganizationPolicy
+class CodeGroupPolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +18,19 @@ class OrganizationPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('любой просмотр: организация');
+        return $user->hasPermissionTo('любой просмотр: правило');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Organization  $organization
+     * @param  \App\Models\CodeGroup  $codeGroup
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Organization $organization)
+    public function view(User $user, CodeGroup $codeGroup)
     {
-        return $user->hasPermissionTo('просмотр: организация');
+        return $user->hasPermissionTo('просмотр: правило');
     }
 
     /**
@@ -41,54 +41,54 @@ class OrganizationPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('создание: организация');
+        return $user->hasPermissionTo('создание: правило');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Organization  $organization
+     * @param  \App\Models\CodeGroup  $codeGroup
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Organization $organization)
+    public function update(User $user, CodeGroup $codeGroup)
     {
-        return $user->hasPermissionTo('изменение: организация');
+        return $user->hasPermissionTo('изменение: правило');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Organization  $organization
+     * @param  \App\Models\CodeGroup  $codeGroup
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Organization $organization)
+    public function delete(User $user, CodeGroup $codeGroup)
     {
-        return $user->hasPermissionTo('удаление: организация');
+        return $user->hasPermissionTo('изменение: правило');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Organization  $organization
+     * @param  \App\Models\CodeGroup  $codeGroup
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Organization $organization)
+    public function restore(User $user, CodeGroup $codeGroup)
     {
-        return $user->hasPermissionTo('восстановление: организация');
+        return $user->hasPermissionTo('восстановление: правило');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Organization  $organization
+     * @param  \App\Models\CodeGroup  $codeGroup
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Organization $organization)
+    public function forceDelete(User $user, CodeGroup $codeGroup)
     {
-        return $user->hasPermissionTo('безвозвратное удаление: организация');
+        return $user->hasPermissionTo('безвозвратное удаление: правило');
     }
 }

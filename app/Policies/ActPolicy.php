@@ -18,7 +18,7 @@ class ActPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->hasPermissionTo('любой просмотр: акт экспертизы');
     }
 
     /**
@@ -30,7 +30,7 @@ class ActPolicy
      */
     public function view(User $user, Act $act)
     {
-        return true;
+        return $user->hasPermissionTo('просмотр: акт экспертизы');
     }
 
     /**
@@ -41,11 +41,7 @@ class ActPolicy
      */
     public function create(User $user)
     {
-/*        if ($user->hasRole('Admin') || $user->hasPermissionTo('Create Acts')) {
-            return true;
-        }
-        return false;*/
-        return true;
+        return $user->hasPermissionTo('создание: акт экспертизы');
     }
 
     /**
@@ -57,7 +53,7 @@ class ActPolicy
      */
     public function update(User $user, Act $act)
     {
-        return true;
+        return $user->hasPermissionTo('изменение: акт экспертизы');
     }
 
     /**
@@ -69,7 +65,7 @@ class ActPolicy
      */
     public function delete(User $user, Act $act)
     {
-        return true;
+        return $user->hasPermissionTo('изменение: акт экспертизы');
     }
 
     /**
@@ -81,7 +77,7 @@ class ActPolicy
      */
     public function restore(User $user, Act $act)
     {
-        return true;
+        return $user->hasPermissionTo('восстановление: акт экспертизы');
     }
 
     /**
@@ -93,6 +89,6 @@ class ActPolicy
      */
     public function forceDelete(User $user, Act $act)
     {
-        return true;
+        return $user->hasPermissionTo('безвозвратное удаление: акт экспертизы');
     }
 }
