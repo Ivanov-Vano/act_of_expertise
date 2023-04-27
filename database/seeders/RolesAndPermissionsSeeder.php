@@ -2,12 +2,19 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
+use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
     /**
+     *
+     * Сидер для первоначальной записи минимальных значений роли, разрешений и пользователей
+     *
      * Run the database seeds.
      *
      * @return void
@@ -16,5 +23,134 @@ class RolesAndPermissionsSeeder extends Seeder
     {
         // reset cached roles and permissions (сбросить кешированные роли и разрешения)
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
+        //Misc (пустышка)
+        $miscPermission = Permission::create(['name' => 'N/A']);
+
+        //Act model
+        $actPermission1 = Permission::create(['name' => 'любой просмотр: акт экспертизы']);
+        $actPermission2 = Permission::create(['name' => 'просмотр: акт экспертизы']);
+        $actPermission3 = Permission::create(['name' => 'создание: акт экспертизы']);
+        $actPermission4 = Permission::create(['name' => 'изменение: акт экспертизы']);
+        $actPermission5 = Permission::create(['name' => 'удаление: акт экспертизы']);
+        $actPermission6 = Permission::create(['name' => 'восстановление: акт экспертизы']);
+        $actPermission7 = Permission::create(['name' => 'безвозвратное удаление: акт экспертизы']);
+
+        //Attachment model
+        $attachmentPermission1 = Permission::create(['name' => 'любой просмотр: приложение']);
+        $attachmentPermission2 = Permission::create(['name' => 'просмотр: приложение']);
+        $attachmentPermission3 = Permission::create(['name' => 'создание: приложение']);
+        $attachmentPermission4 = Permission::create(['name' => 'изменение: приложение']);
+        $attachmentPermission5 = Permission::create(['name' => 'удаление: приложение']);
+        $attachmentPermission6 = Permission::create(['name' => 'восстановление: приложение']);
+        $attachmentPermission7 = Permission::create(['name' => 'безвозвратное удаление: приложение']);
+
+        //CodeGroup model
+        $codeGroupPermission1 = Permission::create(['name' => 'любой просмотр: правило']);
+        $codeGroupPermission2 = Permission::create(['name' => 'просмотр: правило']);
+        $codeGroupPermission3 = Permission::create(['name' => 'создание: правило']);
+        $codeGroupPermission4 = Permission::create(['name' => 'изменение: правило']);
+        $codeGroupPermission5 = Permission::create(['name' => 'удаление: правило']);
+        $codeGroupPermission6 = Permission::create(['name' => 'восстановление: правило']);
+        $codeGroupPermission7 = Permission::create(['name' => 'безвозвратное удаление: правило']);
+
+        //Expert model
+        $expertPermission1 = Permission::create(['name' => 'любой просмотр: эксперт']);
+        $expertPermission2 = Permission::create(['name' => 'просмотр: эксперт']);
+        $expertPermission3 = Permission::create(['name' => 'создание: эксперт']);
+        $expertPermission4 = Permission::create(['name' => 'изменение: эксперт']);
+        $expertPermission5 = Permission::create(['name' => 'удаление: эксперт']);
+        $expertPermission6 = Permission::create(['name' => 'восстановление: эксперт']);
+        $expertPermission7 = Permission::create(['name' => 'безвозвратное удаление: эксперт']);
+
+        //Organization model
+        $organizationPermission1 = Permission::create(['name' => 'любой просмотр: организация']);
+        $organizationPermission2 = Permission::create(['name' => 'просмотр: организация']);
+        $organizationPermission3 = Permission::create(['name' => 'создание: организация']);
+        $organizationPermission4 = Permission::create(['name' => 'изменение: организация']);
+        $organizationPermission5 = Permission::create(['name' => 'удаление: организация']);
+        $organizationPermission6 = Permission::create(['name' => 'восстановление: организация']);
+        $organizationPermission7 = Permission::create(['name' => 'безвозвратное удаление: организация']);
+
+        //Position model
+        $positionPermission1 = Permission::create(['name' => 'любой просмотр: товарная позиция']);
+        $positionPermission2 = Permission::create(['name' => 'просмотр: товарная позиция']);
+        $positionPermission3 = Permission::create(['name' => 'создание: товарная позиция']);
+        $positionPermission4 = Permission::create(['name' => 'изменение: товарная позиция']);
+        $positionPermission5 = Permission::create(['name' => 'удаление: товарная позиция']);
+        $positionPermission6 = Permission::create(['name' => 'восстановление: товарная позиция']);
+        $positionPermission7 = Permission::create(['name' => 'безвозвратное удаление: товарная позиция']);
+
+        //Product model
+        $productPermission1 = Permission::create(['name' => 'любой просмотр: товар']);
+        $productPermission2 = Permission::create(['name' => 'просмотр: товар']);
+        $productPermission3 = Permission::create(['name' => 'создание: товар']);
+        $productPermission4 = Permission::create(['name' => 'изменение: товар']);
+        $productPermission5 = Permission::create(['name' => 'удаление: товар']);
+        $productPermission6 = Permission::create(['name' => 'восстановление: товар']);
+        $productPermission7 = Permission::create(['name' => 'безвозвратное удаление: товар']);
+
+        //Subposition model
+        $subpositionPermission1 = Permission::create(['name' => 'любой просмотр: товарная подпозиция']);
+        $subpositionPermission2 = Permission::create(['name' => 'просмотр: товарная подпозиция']);
+        $subpositionPermission3 = Permission::create(['name' => 'создание: товарная подпозиция']);
+        $subpositionPermission4 = Permission::create(['name' => 'изменение: товарная подпозиция']);
+        $subpositionPermission5 = Permission::create(['name' => 'удаление: товарная подпозиция']);
+        $subpositionPermission6 = Permission::create(['name' => 'восстановление: товарная подпозиция']);
+        $subpositionPermission7 = Permission::create(['name' => 'безвозвратное удаление: товарная подпозиция']);
+
+        //TypeAct model
+        $typeActPermission1 = Permission::create(['name' => 'любой просмотр: тип акта']);
+        $typeActPermission2 = Permission::create(['name' => 'просмотр: тип акта']);
+        $typeActPermission3 = Permission::create(['name' => 'создание: тип акта']);
+        $typeActPermission4 = Permission::create(['name' => 'изменение: тип акта']);
+        $typeActPermission5 = Permission::create(['name' => 'удаление: тип акта']);
+        $typeActPermission6 = Permission::create(['name' => 'восстановление: тип акта']);
+        $typeActPermission7 = Permission::create(['name' => 'безвозвратное удаление: тип акта']);
+
+        //CREATE ROLES (создание ролей)
+        $userRole = Role::create(['name' => 'Эксперт'])->syncPermissions([
+            $actPermission1,
+            $actPermission2,
+            $actPermission3,
+            $actPermission4,
+            $actPermission5,
+            $organizationPermission1,
+            $organizationPermission2,
+            $organizationPermission3,
+            $organizationPermission4,
+            $organizationPermission5,
+            $attachmentPermission1,
+            $attachmentPermission2,
+            $attachmentPermission3,
+            $attachmentPermission4,
+            $attachmentPermission5,
+            $attachmentPermission6,
+            $attachmentPermission7,
+            $productPermission1,
+            $productPermission2,
+            $productPermission3,
+            $productPermission4,
+            $productPermission5,
+            $productPermission6,
+            $productPermission7,
+        ]);
+        $adminRole = Role::create(['name' => 'Администратор'])->givePermissionsTo(Permission::all());
+
+        User::create([
+            'username' => 'administrator',
+            'email_verified_at' => now(),
+            'password' => '$2y$10$R5vBPe6dfxDQevMtpH6pmetk3B0oyACoFU7RvLkz8EhUE4u99.r.O', // password 12345678
+            'remember_token' => Str::random(10),
+        ])->assignRole($adminRole);
+        for ($i=1; $i <2; $i++) {
+            User::create([
+                'username' => 'пользователь'.$i,
+                'email_verified_at' => now(),
+                'password' => '$2y$10$R5vBPe6dfxDQevMtpH6pmetk3B0oyACoFU7RvLkz8EhUE4u99.r.O', // password 12345678
+                'remember_token' => Str::random(10),
+            ])->assignRole($userRole);
+        }
+
     }
 }

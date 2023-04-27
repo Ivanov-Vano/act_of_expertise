@@ -65,7 +65,7 @@ class ActPolicy
      */
     public function delete(User $user, Act $act)
     {
-        return $user->hasPermissionTo('изменение: акт экспертизы');
+        return $user->hasPermissionTo('удаление: акт экспертизы');
     }
 
     /**
