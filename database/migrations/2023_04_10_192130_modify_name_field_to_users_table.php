@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Subposition;
 
 return new class extends Migration
 {
@@ -14,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->foreignIdFor(Subposition::class);
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('name')->nullable()->change();
+            $table->string('email')->nullable()->change();
         });
     }
 
@@ -26,9 +26,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->dropForeign(['expert_id']);
-            $table->dropColumn(['expert_id']);
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('name')->change();
+            $table->string('email')->change();
         });
     }
 };

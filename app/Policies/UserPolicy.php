@@ -2,11 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Act;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ActPolicy
+class UserPolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +17,19 @@ class ActPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('любой просмотр: акт экспертизы');
+        return $user->hasRole('Администратор');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Act  $act
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Act $act)
+    public function view(User $user, User $model)
     {
-        return $user->hasPermissionTo('просмотр: акт экспертизы');
+        return $user->hasRole('Администратор');
     }
 
     /**
@@ -41,54 +40,54 @@ class ActPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('создание: акт экспертизы');
+        return $user->hasRole('Администратор');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Act  $act
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Act $act)
+    public function update(User $user, User $model)
     {
-        return $user->hasPermissionTo('изменение: акт экспертизы');
+        return $user->hasRole('Администратор');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Act  $act
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Act $act)
+    public function delete(User $user, User $model)
     {
-        return $user->hasPermissionTo('удаление: акт экспертизы');
+        return $user->hasRole('Администратор');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Act  $act
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Act $act)
+    public function restore(User $user, User $model)
     {
-        return $user->hasPermissionTo('восстановление: акт экспертизы');
+        return $user->hasRole('Администратор');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Act  $act
+     * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Act $act)
+    public function forceDelete(User $user, User $model)
     {
-        return $user->hasPermissionTo('безвозвратное удаление: акт экспертизы');
+        return $user->hasRole('Администратор');
     }
 }

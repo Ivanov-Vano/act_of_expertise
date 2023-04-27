@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Act;
+use App\Models\Position;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ActPolicy
+class PositionPolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +18,19 @@ class ActPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('любой просмотр: акт экспертизы');
+        return $user->hasPermissionTo('любой просмотр: товарная позиция');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Act  $act
+     * @param  \App\Models\Position  $position
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Act $act)
+    public function view(User $user, Position $position)
     {
-        return $user->hasPermissionTo('просмотр: акт экспертизы');
+        return $user->hasPermissionTo('просмотр: товарная позиция');
     }
 
     /**
@@ -41,54 +41,54 @@ class ActPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('создание: акт экспертизы');
+        return $user->hasPermissionTo('создание: товарная позиция');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Act  $act
+     * @param  \App\Models\Position  $position
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Act $act)
+    public function update(User $user, Position $position)
     {
-        return $user->hasPermissionTo('изменение: акт экспертизы');
+        return $user->hasPermissionTo('изменение: товарная позиция');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Act  $act
+     * @param  \App\Models\Position  $position
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Act $act)
+    public function delete(User $user, Position $position)
     {
-        return $user->hasPermissionTo('удаление: акт экспертизы');
+        return $user->hasPermissionTo('удаление: товарная позиция');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Act  $act
+     * @param  \App\Models\Position  $position
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Act $act)
+    public function restore(User $user, Position $position)
     {
-        return $user->hasPermissionTo('восстановление: акт экспертизы');
+        return $user->hasPermissionTo('восстановление: товарная позиция');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Act  $act
+     * @param  \App\Models\Position  $position
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Act $act)
+    public function forceDelete(User $user, Position $position)
     {
-        return $user->hasPermissionTo('безвозвратное удаление: акт экспертизы');
+        return $user->hasPermissionTo('безвозвратное удаление: товарная позиция');
     }
 }

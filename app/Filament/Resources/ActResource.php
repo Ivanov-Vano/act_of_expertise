@@ -28,7 +28,13 @@ class ActResource extends Resource
 
     protected static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count();
+//        return static::getModel()::count();
+        $user = auth()->user();
+        if ($user->hasAnyRole(['Администратор', 'Суперпользователь'])) {
+            return static::getModel()::count();
+        }
+        return static::getEloquentQuery()
+            ->whereBelongsTo(auth()->user()->expert)->count();
     }
 
     protected static ?string $modelLabel = 'акт экспертизы';
@@ -318,7 +324,15 @@ class ActResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
+        $user = auth()->user();
+        if ($user->hasAnyRole(['Администратор', 'Суперпользователь'])) {
+            return parent::getEloquentQuery()
+                ->withoutGlobalScopes([
+                    SoftDeletingScope::class,
+                ]);
+        }
         return parent::getEloquentQuery()
+            ->whereBelongsTo(auth()->user()->expert)
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);

@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Act;
+use App\Models\TypeAct;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ActPolicy
+class TypeActPolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +18,19 @@ class ActPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('любой просмотр: акт экспертизы');
+        return $user->hasPermissionTo('просмотр всех: тип акта');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Act  $act
+     * @param  \App\Models\TypeAct  $typeAct
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Act $act)
+    public function view(User $user, TypeAct $typeAct)
     {
-        return $user->hasPermissionTo('просмотр: акт экспертизы');
+        return $user->hasPermissionTo('просмотр: тип акта');
     }
 
     /**
@@ -41,54 +41,54 @@ class ActPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('создание: акт экспертизы');
+        return $user->hasPermissionTo('создание: тип акта');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Act  $act
+     * @param  \App\Models\TypeAct  $typeAct
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Act $act)
+    public function update(User $user, TypeAct $typeAct)
     {
-        return $user->hasPermissionTo('изменение: акт экспертизы');
+        return $user->hasPermissionTo('изменение: тип акта');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Act  $act
+     * @param  \App\Models\TypeAct  $typeAct
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Act $act)
+    public function delete(User $user, TypeAct $typeAct)
     {
-        return $user->hasPermissionTo('удаление: акт экспертизы');
+        return $user->hasPermissionTo('удаление: тип акта');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Act  $act
+     * @param  \App\Models\TypeAct  $typeAct
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Act $act)
+    public function restore(User $user, TypeAct $typeAct)
     {
-        return $user->hasPermissionTo('восстановление: акт экспертизы');
+        return $user->hasPermissionTo('восстановление: тип акта');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Act  $act
+     * @param  \App\Models\TypeAct  $typeAct
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Act $act)
+    public function forceDelete(User $user, TypeAct $typeAct)
     {
-        return $user->hasPermissionTo('безвозвратное удаление: акт экспертизы');
+        return $user->hasPermissionTo('безвозвратное удаление: тип акта');
     }
 }

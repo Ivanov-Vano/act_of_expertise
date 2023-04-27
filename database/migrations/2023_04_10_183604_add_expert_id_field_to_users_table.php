@@ -1,9 +1,9 @@
 <?php
 
+use App\Models\Expert;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Subposition;
 
 return new class extends Migration
 {
@@ -14,8 +14,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->foreignIdFor(Subposition::class);
+        Schema::table('users', function (Blueprint $table) {
+           $table->foreignId('expert_id')->nullable();
+            $table->foreign('expert_id')->references('id')->on('experts');
         });
     }
 
@@ -26,9 +27,10 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('products', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->dropForeign(['expert_id']);
             $table->dropColumn(['expert_id']);
+
         });
     }
 };
