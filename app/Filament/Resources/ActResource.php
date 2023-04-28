@@ -12,6 +12,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Actions\ReplicateAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\TextInput;
@@ -275,13 +276,19 @@ class ActResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('expert.full_name')->label('Эксперт'),
-                TextColumn::make('number')->sortable()->label('Номер')
-                ->searchable(),
-                TextColumn::make('customer.short_name')->sortable()->label('Заказчик')
+                TextColumn::make('expert.full_name')
+                    ->sortable()
+                    ->searchable()
+                    ->label('Эксперт'),
+                TextColumn::make('number')
+                    ->sortable()
+                    ->label('Номер')
+                    ->searchable(),
+                TextColumn::make('customer.short_name')
+                    ->sortable()
+                    ->label('Заказчик')
                     ->searchable(),
                 TextColumn::make('date')
-//                    ->date()
                     ->date('d.m.Y')
                     ->sortable()
                     ->label('Дата составления'),
@@ -296,6 +303,8 @@ class ActResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                ReplicateAction::make(),
+
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
