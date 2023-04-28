@@ -13,6 +13,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -40,11 +41,11 @@ class RoleResource extends Resource
                     ->unique(ignoreRecord: true)
                     ->minLength(2)
                     ->maxLength(255),
-/*                Select::make('permissions')
+                Select::make('permissions')
                     ->label('Разрешения')
                     ->multiple()
                     ->preload()
-                    ->relationship('permissions', 'name')*/
+                    ->relationship('permissions', 'name')
             ]);
     }
 
@@ -53,7 +54,9 @@ class RoleResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->label('Наименование')
+                    ->label('Наименование'),
+                TagsColumn::make('permissions.name')
+                    ->label('разрешения')
             ])
             ->filters([
                 //
@@ -69,7 +72,6 @@ class RoleResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
         ];
     }
 
