@@ -109,7 +109,8 @@ class ActController extends Controller
             ->join('subpositions as sp', 'sp.id', '=', 'products.subposition_id')
             ->groupBy('sp.full_code', 'origin_criterion')
             ->select(DB::raw("(substring(full_code, 1, 4)) as code, (substring(origin_criterion, 1, 1)) as criteria,
-       case when origin_criterion='Полная' then 'полной' else 'достаточной' end as text"))
+       case when origin_criterion='Полная' then 'полной' else 'достаточной' end as text,
+       concat((substring(origin_criterion, 1, 1)),(if(origin_criterion<>'Полная',(substring(full_code, 1, 4)),''))) as code_criteria"))
             ->get();
         $criteria = $criteriaByAct->toArray();
 
@@ -117,7 +118,6 @@ class ActController extends Controller
         $myDateTime = date_create_from_format('Y-m-d', $act->date);
         $templateProcessor = new TemplateProcessor('word-template/act_template.docx');
         $templateProcessor->setValue('type', $act->type->short_name);
-
 
         $templateProcessor->setValue('number', $act->number);
         $templateProcessor->setValue('expert', $myFio);
