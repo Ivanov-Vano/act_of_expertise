@@ -124,7 +124,7 @@ class ActResource extends Resource
                             ->required()
                             ->label('Единица измерения'),
                         TextInput::make('position')
-                            ->label('Позиции'),
+                            ->label('Количество мест'),
                     ])
                 ->columns(3),
                 Section::make('Контракт и счет')

@@ -108,7 +108,6 @@ class ProductsRelationManager extends RelationManager
                     ->description('(в единицах измерения)')
                     ->schema([
                         TextInput::make('gross')
-                            ->required()
                             ->numeric()
                             ->mask(fn (TextInput\Mask $mask) => $mask
                                 ->numeric()
@@ -116,7 +115,6 @@ class ProductsRelationManager extends RelationManager
                             )
                             ->label('Брутто'),
                         TextInput::make('netto')
-                            ->required()
                             ->numeric()
                             ->mask(fn (TextInput\Mask $mask) => $mask
                                 ->numeric()
@@ -125,7 +123,6 @@ class ProductsRelationManager extends RelationManager
                             ->label('Нетто'),
                         TextInput::make('measure')
                             ->datalist(['кг', 'куб. м'])
-                            ->required()
                             ->label('Единица измерения'),
                         ]),
                         TextInput::make('description')
