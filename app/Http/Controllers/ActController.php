@@ -81,7 +81,9 @@ class ActController extends Controller
             ->join('acts', 'acts.id', '=', 'p_agg.act_id')
             ->join('organizations as c', 'c.id', '=', 'acts.customer_id')
             ->join('code_groups as cg', 'cg.id', '=', 'p_agg.code_group_id')
-            ->select('product_name', 'product_brand',
+            ->select(DB::raw('concat(product_name, (if(product_brand<>"",(concat(", марка: ", product_brand)),"")),
+                (if(product_item_number<>"",(concat(", артикул: ", product_item_number)),""))) as product_name_full'),
+                'product_name', 'product_brand',
                 'product_item_number', 'subpositions.full_code as product_hscode',
             'm.short_name as product_manufacturer', 'countries.short_name as product_country',
             'c.short_name as product_customer', 'cg.number as product_group', 'cg.condition as product_condition',
