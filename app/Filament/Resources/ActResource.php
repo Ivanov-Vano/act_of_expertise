@@ -111,8 +111,9 @@ class ActResource extends Resource
                                 ->decimalPlaces(2)
                             )
                             ->label('Нетто'),
-                        TextInput::make('measure')
-                            ->datalist(['кг', 'куб. м'])
+                        Select::make('measure_id')
+                            ->default('кг')
+                            ->relationship('measure', 'short_name')
                             ->required()
                             ->label('Единица измерения'),
                         TextInput::make('position')
