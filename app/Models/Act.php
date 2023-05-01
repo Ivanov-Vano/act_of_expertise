@@ -20,7 +20,7 @@ class Act extends Model
         'reason',
         'gross',
         'netto',
-        'measure',
+        'measure_id',
         'position',
         'contract',
         'invoice',
@@ -47,6 +47,11 @@ class Act extends Model
     public function type(): BelongsTo
     {
         return $this->belongsTo(TypeAct::class, 'type_act_id');
+    }
+
+    public function measure():BelongsTo
+    {
+        return $this->belongsTo(Measure::class);
     }
 
     //заказчик

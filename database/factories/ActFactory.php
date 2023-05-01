@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Company;
 use App\Models\Expert;
+use App\Models\Measure;
 use App\Models\Organization;
 use App\Models\Transport;
 use App\Models\TypeAct;
@@ -30,7 +31,8 @@ class ActFactory extends Factory
             'reason' => $this->faker->realTextBetween(160,255),
             'gross' => $this->faker->randomFloat(2, 1, 99999),
             'netto' => $this->faker->randomFloat(2, 1, 99999),
-            'measure' => $this->faker->randomElement(['кг', 'куб. м']),
+//            'measure' => $this->faker->randomElement(['кг', 'куб. м']),
+            'measure_id' => Measure::all()->random()->id,
             'position' => $this->faker->bothify('## ??????????????'),
             'contract' => $this->faker->bothify('Контракт № ## от ##.##.####'),
             'invoice' => $this->faker->bothify('Инвойс № ## от ##.##.####'),

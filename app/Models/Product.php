@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
@@ -18,7 +19,7 @@ class Product extends Model
         'item_number',
         'gross',
         'netto',
-        'measure',
+        'measure_id',
         'origin_criterion',
         'description',
         'code_group_id',
@@ -37,5 +38,9 @@ class Product extends Model
     public function manufacturer()
     {
         return $this->belongsTo(Organization::class, 'manufacturer_id');
+    }
+    public function measure():BelongsTo
+    {
+        return $this->belongsTo(Measure::class);
     }
 }

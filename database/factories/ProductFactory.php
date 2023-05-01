@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\{HsCode, Act, CodeGroup, Organization, Subposition};
+use App\Models\{HsCode, Act, CodeGroup, Measure, Organization, Subposition};
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
@@ -25,7 +25,8 @@ class ProductFactory extends Factory
             'item_number' => $this->faker->numerify('##########'),
             'gross' => $this->faker->randomFloat(2, 1, 99999),
             'netto' => $this->faker->randomFloat(2, 1, 99999),
-            'measure' => $this->faker->randomElement(['кг', 'куб. м']),
+//            'measure' => $this->faker->randomElement(['кг', 'куб. м']),
+            'measure_id' => Measure::all()->random()->id,
             'origin_criterion' => $this->faker->randomElement(['Полная', 'Достаточная']),
             'description' => $this->faker->sentence(),
             'code_group_id' => CodeGroup::all()->random()->id,
