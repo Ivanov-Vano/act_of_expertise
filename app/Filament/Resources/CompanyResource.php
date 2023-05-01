@@ -28,6 +28,8 @@ class CompanyResource extends Resource
 
     protected static ?string $navigationGroup = 'Справочники';
 
+    protected static ?int $navigationSort = 2;
+
     protected static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();

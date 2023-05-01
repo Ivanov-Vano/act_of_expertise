@@ -28,6 +28,8 @@ class OrganizationResource extends Resource
 
     protected static ?string $navigationGroup = 'Справочники';
 
+    protected static ?int $navigationSort = 1;
+
     protected static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
