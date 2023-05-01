@@ -10,6 +10,11 @@ class EditAct extends EditRecord
 {
     protected static string $resource = ActResource::class;
 
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
     protected function getActions(): array
     {
         return [

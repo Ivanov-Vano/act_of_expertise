@@ -18,5 +18,4 @@ class CreateCompany extends CreateRecord
     {
         return $this->getResource()::getUrl('index');
     }
-
 }

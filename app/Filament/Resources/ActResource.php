@@ -153,6 +153,8 @@ class ActResource extends Resource
                                     ->maxLength(255)
                                     ->label('Юридический адрес'),
                             ])
+                            ->reactive()
+                            ->afterStateUpdated(fn ($state, callable $set) => $set('shipper_id', $state))
                             ->required()
                             ->label('Экспортер'),
                         Select::make('shipper_id')
@@ -204,6 +206,8 @@ class ActResource extends Resource
                                     ->maxLength(255)
                                     ->label('Адрес'),
                             ])
+                            ->reactive()
+                            ->afterStateUpdated(fn ($state, callable $set) => $set('consignee_id', $state))
                             ->label('Импортер'),
                         Select::make('consignee_id')
                             ->relationship('consignee', 'short_name')
@@ -277,9 +281,9 @@ class ActResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+//                Tables\Actions\ViewAction::make(),
                 ReplicateAction::make(),
+                Tables\Actions\EditAction::make(),
 
             ])
             ->bulkActions([
