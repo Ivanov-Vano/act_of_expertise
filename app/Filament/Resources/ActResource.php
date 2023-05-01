@@ -269,22 +269,37 @@ class ActResource extends Resource
                 TextColumn::make('expert.full_name')
                     ->sortable()
                     ->searchable()
+                    ->toggleable()
                     ->label('Эксперт'),
                 TextColumn::make('number')
                     ->sortable()
                     ->label('Номер')
+                    ->toggleable()
                     ->searchable(),
                 TextColumn::make('customer.short_name')
                     ->sortable()
                     ->label('Заказчик')
+                    ->toggleable()
+                    ->searchable(),
+                TextColumn::make('exporter.short_name')
+                    ->sortable()
+                    ->label('Экспортер')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->searchable(),
+                TextColumn::make('importer.short_name')
+                    ->sortable()
+                    ->label('Импортер')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->searchable(),
                 TextColumn::make('date')
                     ->date('d.m.Y')
                     ->sortable()
+                    ->toggleable()
                     ->label('Дата составления'),
                 TextColumn::make('created_at')
                     ->dateTime('d.m.Y H:i:s')
                     ->sortable()
+                    ->toggleable()
                     ->label('Создан'),
             ])
             ->filters([
