@@ -115,6 +115,15 @@ class ActResource extends Resource
                             ->default('кг')
                             ->relationship('measure', 'short_name')
                             ->required()
+                            ->createOptionForm([
+                                TextInput::make('short_name')
+                                    ->maxLength(50)
+                                    ->required()
+                                    ->label('Наименование'),
+                                TextInput::make('name')
+                                    ->maxLength(255)
+                                    ->label('Полное наименование'),
+                            ])
                             ->label('Единица измерения'),
                         TextInput::make('position')
                             ->label('Количество мест'),
