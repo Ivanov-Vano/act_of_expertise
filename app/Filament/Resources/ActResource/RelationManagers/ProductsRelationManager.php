@@ -64,11 +64,6 @@ class ProductsRelationManager extends RelationManager
                     ->searchable()
                     ->columnSpanFull()
                     ->preload(),
-/*                    ->getSearchResultsUsing(fn (string $search) => CodeGroup::where('number', 'like', "%{$search}%")
-                        ->orderBy('id')
-                        ->limit(50)
-                        ->pluck('number', 'id'))
-                    ->getOptionLabelUsing(fn ($value): ?string => CodeGroup::find($value)?->number),*/
                 Select::make('manufacturer_id')
                     ->relationship('manufacturer', 'short_name')
                     ->required()
@@ -76,10 +71,6 @@ class ProductsRelationManager extends RelationManager
                     ->preload()
                     ->columnSpanFull()
                     ->createOptionForm([
-                        Select::make('country_id')
-                            ->relationship('country', 'short_name')
-                            ->required()
-                            ->label('Страна'),
                         TextInput::make('short_name')
                             ->maxLength(100)
                             ->required()

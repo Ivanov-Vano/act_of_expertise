@@ -2,29 +2,29 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\OrganizationResource\Pages;
-use App\Filament\Resources\OrganizationResource\RelationManagers;
-use App\Models\Organization;
+use App\Filament\Resources\CompanyResource\Pages;
+use App\Filament\Resources\CompanyResource\RelationManagers;
+use App\Models\Company;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class OrganizationResource extends Resource
+class CompanyResource extends Resource
 {
-    protected static ?string $model = Organization::class;
+    protected static ?string $model = Company::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-newspaper';
 
-    protected static ?string $modelLabel = 'организация';
+    protected static ?string $modelLabel = 'компания';
 
-    protected static ?string $pluralModelLabel = 'организации';
+    protected static ?string $pluralModelLabel = 'иностранные компании';
 
     protected static ?string $navigationGroup = 'Справочники';
 
@@ -32,10 +32,15 @@ class OrganizationResource extends Resource
     {
         return static::getModel()::count();
     }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Select::make('country_id')
+                    ->relationship('country', 'short_name')
+                    ->required()
+                    ->label('Страна'),
                 TextInput::make('short_name')
                     ->maxLength(100)
                     ->required()
@@ -43,16 +48,12 @@ class OrganizationResource extends Resource
                 TextInput::make('name')
                     ->maxLength(255)
                     ->label('Полное наименование'),
-                TextInput::make('inn')
+                TextInput::make('registration_number')
                     ->maxLength(50)
-                    ->label('ИНН'),
-                TextInput::make('phone')
-                    ->tel()
-                    ->maxLength(50)
-                    ->label('Телефон'),
+                    ->label('Регистрационный номер'),
                 TextInput::make('address')
                     ->maxLength(255)
-                    ->label('Юридический адрес'),
+                    ->label('Адрес'),
             ]);
     }
 
@@ -66,26 +67,22 @@ class OrganizationResource extends Resource
                 TextColumn::make('short_name')
                     ->label('Наименование')
                     ->searchable(),
+                TextColumn::make('registration_number')
+                    ->searchable()
+                    ->label('Регистрационный номер'),
                 TextColumn::make('name')
                     ->label('Полное наименование'),
-                TextColumn::make('inn')
-                    ->label('ИНН'),
-                TextColumn::make('phone')
-                    ->label('Телефон'),
                 TextColumn::make('address')
-                    ->label('Юридический адрес'),
+                    ->label('Адрес'),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-                Tables\Actions\ForceDeleteBulkAction::make(),
-                Tables\Actions\RestoreBulkAction::make(),
             ]);
     }
 
@@ -99,18 +96,9 @@ class OrganizationResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListOrganizations::route('/'),
-            'create' => Pages\CreateOrganization::route('/create'),
-            'view' => Pages\ViewOrganization::route('/{record}'),
-            'edit' => Pages\EditOrganization::route('/{record}/edit'),
+            'index' => Pages\ListCompanies::route('/'),
+            'create' => Pages\CreateCompany::route('/create'),
+            'edit' => Pages\EditCompany::route('/{record}/edit'),
         ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
     }
 }

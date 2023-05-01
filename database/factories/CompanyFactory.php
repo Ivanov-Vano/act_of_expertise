@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Country;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Organization>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Company>
  */
-class OrganizationFactory extends Factory
+class CompanyFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,10 +18,10 @@ class OrganizationFactory extends Factory
     public function definition()
     {
         return [
+            'country_id' => Country::all()->random()->id,
             'short_name' => $this->faker->company,
             'name' => $this->faker->companySuffix,
-            'inn' => $this->faker->numerify('##########'),
-            'phone' => $this->faker->phoneNumber,
+            'registration_number' => $this->faker->numerify('##########'),
             'address' => $this->faker->address,
         ];
     }

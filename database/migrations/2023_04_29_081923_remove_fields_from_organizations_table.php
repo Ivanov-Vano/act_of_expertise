@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->float('gross')->nullable()->change();
-            $table->float('netto')->nullable()->change();
+        Schema::table('organizations', function (Blueprint $table) {
+            $table->dropForeign(['country_id']);
+            $table->dropColumn(['country_id']);
+
         });
     }
 
@@ -26,9 +27,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->float('gross')->change();
-            $table->float('netto')->change();
+        Schema::table('organizations', function (Blueprint $table) {
+            $table->foreignIdFor(Country::class)->constrained()->onDelete('cascade');
         });
     }
 };

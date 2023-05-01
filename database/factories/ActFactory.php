@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Company;
 use App\Models\Expert;
 use App\Models\Organization;
 use App\Models\Transport;
@@ -35,8 +36,8 @@ class ActFactory extends Factory
             'invoice' => $this->faker->bothify('Инвойс № ## от ##.##.####'),
             'exporter_id' => Organization::all()->random()->id,
             'shipper_id' => Organization::all()->random()->id,
-            'importer_id' => Organization::all()->random()->id,
-            'consignee_id' => Organization::all()->random()->id,
+            'importer_id' => Company::all()->random()->id,
+            'consignee_id' => Company::all()->random()->id,
             'cargo' => $this->faker->realTextBetween(160,255), // TODO удалить
             'package' => $this->faker->realTextBetween(160,255),
             'description' => $this->faker->realTextBetween(160,255),

@@ -64,10 +64,6 @@ class ActResource extends Resource
                     ->required()
                     ->type('date')
                     ->label('дата составления акта'),
-/*                DatePicker::make('date')
-                    ->required()
-                    ->displayFormat('d.m.Y')
-                    ->label('дата составления акта'),*/
                 TextInput::make('reason')
                     ->maxLength(255)
                     ->label('Основание для проведения экспертизы'),
@@ -76,10 +72,6 @@ class ActResource extends Resource
                     ->searchable()
                     ->preload()
                     ->createOptionForm([
-                        Select::make('country_id')
-                            ->relationship('country', 'short_name')
-                            ->required()
-                            ->label('Страна'),
                         TextInput::make('short_name')
                             ->maxLength(100)
                             ->required()
@@ -143,10 +135,6 @@ class ActResource extends Resource
                             ->searchable()
                             ->preload()
                             ->createOptionForm([
-                                Select::make('country_id')
-                                    ->relationship('country', 'short_name')
-                                    ->required()
-                                    ->label('Страна'),
                                 TextInput::make('short_name')
                                     ->maxLength(100)
                                     ->required()
@@ -173,10 +161,6 @@ class ActResource extends Resource
                             ->relationship('shipper', 'short_name')
                             ->required()
                             ->createOptionForm([
-                                Select::make('country_id')
-                                    ->relationship('country', 'short_name')
-                                    ->required()
-                                    ->label('Страна'),
                                 TextInput::make('short_name')
                                     ->maxLength(100)
                                     ->required()
@@ -213,16 +197,12 @@ class ActResource extends Resource
                                 TextInput::make('name')
                                     ->maxLength(255)
                                     ->label('Полное наименование'),
-                                TextInput::make('inn')
+                                TextInput::make('registration_number')
                                     ->maxLength(50)
-                                    ->label('ИНН'),
-                                TextInput::make('phone')
-                                    ->tel()
-                                    ->maxLength(50)
-                                    ->label('Телефон'),
+                                    ->label('Регистрационный номер'),
                                 TextInput::make('address')
                                     ->maxLength(255)
-                                    ->label('Юридический адрес'),
+                                    ->label('Адрес'),
                             ])
                             ->label('Импортер'),
                         Select::make('consignee_id')
@@ -241,16 +221,12 @@ class ActResource extends Resource
                                 TextInput::make('name')
                                     ->maxLength(255)
                                     ->label('Полное наименование'),
-                                TextInput::make('inn')
+                                TextInput::make('registration_number')
                                     ->maxLength(50)
-                                    ->label('ИНН'),
-                                TextInput::make('phone')
-                                    ->tel()
-                                    ->maxLength(50)
-                                    ->label('Телефон'),
+                                    ->label('Регистрационный номер'),
                                 TextInput::make('address')
                                     ->maxLength(255)
-                                    ->label('Юридический адрес'),
+                                    ->label('Адрес'),
                             ])
                             ->required()
                             ->label('Грузополучатель'),

@@ -6,15 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Organization extends Model
+class Company extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable =[
         'short_name',
         'name',
-        'inn',
-        'phone',
+        'registration_number',
         'address',
+        'country_id'
     ];
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
 }
