@@ -56,6 +56,15 @@ class RolesAndPermissionsSeeder extends Seeder
         $codeGroupPermission6 = Permission::create(['name' => 'восстановление: правило']);
         $codeGroupPermission7 = Permission::create(['name' => 'безвозвратное удаление: правило']);
 
+        //Company model
+        $companyPermission1 = Permission::create(['name' => 'просмотр всех: компания']);
+        $companyPermission2 = Permission::create(['name' => 'просмотр: компания']);
+        $companyPermission3 = Permission::create(['name' => 'создание: компания']);
+        $companyPermission4 = Permission::create(['name' => 'изменение: компания']);
+        $companyPermission5 = Permission::create(['name' => 'удаление: компания']);
+        $companyPermission6 = Permission::create(['name' => 'восстановление: компания']);
+        $companyPermission7 = Permission::create(['name' => 'безвозвратное удаление: компания']);
+
         //Expert model
         $expertPermission1 = Permission::create(['name' => 'просмотр всех: эксперт']);
         $expertPermission2 = Permission::create(['name' => 'просмотр: эксперт']);
@@ -64,6 +73,15 @@ class RolesAndPermissionsSeeder extends Seeder
         $expertPermission5 = Permission::create(['name' => 'удаление: эксперт']);
         $expertPermission6 = Permission::create(['name' => 'восстановление: эксперт']);
         $expertPermission7 = Permission::create(['name' => 'безвозвратное удаление: эксперт']);
+
+        //Measure model
+        $measurePermission1 = Permission::create(['name' => 'просмотр всех: единица измерения']);
+        $measurePermission2 = Permission::create(['name' => 'просмотр: единица измерения']);
+        $measurePermission3 = Permission::create(['name' => 'создание: единица измерения']);
+        $measurePermission4 = Permission::create(['name' => 'изменение: единица измерения']);
+        $measurePermission5 = Permission::create(['name' => 'удаление: единица измерения']);
+        $measurePermission6 = Permission::create(['name' => 'восстановление: единица измерения']);
+        $measurePermission7 = Permission::create(['name' => 'безвозвратное удаление: единица измерения']);
 
         //Organization model
         $organizationPermission1 = Permission::create(['name' => 'просмотр всех: организация']);
@@ -122,6 +140,16 @@ class RolesAndPermissionsSeeder extends Seeder
             $organizationPermission3,
             $organizationPermission4,
             $organizationPermission5,
+            $companyPermission1,
+            $companyPermission2,
+            $companyPermission3,
+            $companyPermission4,
+            $companyPermission5,
+            $measurePermission1,
+            $measurePermission2,
+            $measurePermission3,
+            $measurePermission4,
+            $measurePermission5,
             $attachmentPermission1,
             $attachmentPermission2,
             $attachmentPermission3,
@@ -160,6 +188,13 @@ class RolesAndPermissionsSeeder extends Seeder
             $codeGroupPermission5,
             $codeGroupPermission6,
             $codeGroupPermission7,
+            $companyPermission1,
+            $companyPermission2,
+            $companyPermission3,
+            $companyPermission4,
+            $companyPermission5,
+            $companyPermission6,
+            $companyPermission7,
             $expertPermission1,
             $expertPermission2,
             $expertPermission3,
@@ -167,6 +202,13 @@ class RolesAndPermissionsSeeder extends Seeder
             $expertPermission5,
             $expertPermission6,
             $expertPermission7,
+            $measurePermission1,
+            $measurePermission2,
+            $measurePermission3,
+            $measurePermission4,
+            $measurePermission5,
+            $measurePermission6,
+            $measurePermission7,
             $organizationPermission1,
             $organizationPermission2,
             $organizationPermission3,
