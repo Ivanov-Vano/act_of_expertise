@@ -41,7 +41,9 @@ class OrganizationResource extends Resource
                 TextInput::make('short_name')
                     ->maxLength(100)
                     ->required()
-                    ->label('Наименование'),
+                    ->label('Наименование')
+                    ->reactive()
+                    ->afterStateUpdated(fn ($state, callable $set) => $set('name', $state)),
                 TextInput::make('name')
                     ->maxLength(255)
                     ->label('Полное наименование'),

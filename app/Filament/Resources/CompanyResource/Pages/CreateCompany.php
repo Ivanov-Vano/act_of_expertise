@@ -9,4 +9,14 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateCompany extends CreateRecord
 {
     protected static string $resource = CompanyResource::class;
+
+    protected function getCreatedNotificationTitle(): ?string
+    {
+        return 'Создана новая компания';
+    }
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
 }

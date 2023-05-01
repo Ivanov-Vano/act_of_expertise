@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CompanyResource\Pages;
 use App\Filament\Resources\CompanyResource\RelationManagers;
 use App\Models\Company;
+use Closure;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -46,7 +47,9 @@ class CompanyResource extends Resource
                 TextInput::make('short_name')
                     ->maxLength(100)
                     ->required()
-                    ->label('Наименование'),
+                    ->label('Наименование')
+                    ->reactive()
+                    ->afterStateUpdated(fn ($state, callable $set) => $set('name', $state)),
                 TextInput::make('name')
                     ->maxLength(255)
                     ->label('Полное наименование'),
