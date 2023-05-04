@@ -30,11 +30,13 @@ class AttachmentsRelationManager extends RelationManager
                 TextInput::make('name')
                     ->label('Наименование')
                     ->maxLength(255)
-                    ->placeholder('При создании приложения, имя генерируется автоматически при нажатии кнопки "Создать"'),
+                    ->placeholder('Выберите приложения и имя сгенерируется автоматически'),
                 FileUpload::make('file_path')
                     ->directory('attachments')
                     ->preserveFilenames()
                     ->enableDownload()
+                    ->reactive()
+                    ->afterStateUpdated(fn ($state, callable $set) => $set('name', pathinfo($state->getClientOriginalName(), PATHINFO_FILENAME)))
                     ->label('Документ'),
             ]);
     }
@@ -52,10 +54,10 @@ class AttachmentsRelationManager extends RelationManager
             ->headerActions([
                 Tables\Actions\CreateAction::make()
                     //при сохранении записи подставляем имя файла в поле наименование
-                    ->mutateFormDataUsing(function (array $data): array {
+/*                    ->mutateFormDataUsing(function (array $data): array {
                         $data['name'] = pathinfo($data['file_path'], PATHINFO_FILENAME);
                         return $data;
-                    }),
+                    }),*/
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

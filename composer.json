@@ -11,11 +11,12 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "phpoffice/phpword": "^1.0"
+        "phpoffice/phpword": "^1.0",
+        "spatie/laravel-permission": "^5.10"
     },
     "require-dev": {
         "bfinlay/laravel-excel-seeder": "^3.3",
-        "doctrine/dbal": "^3.5",
+        "doctrine/dbal": "^3.6",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",

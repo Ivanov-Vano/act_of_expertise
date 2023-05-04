@@ -28,6 +28,8 @@ class OrganizationResource extends Resource
 
     protected static ?string $navigationGroup = 'Справочники';
 
+    protected static ?int $navigationSort = 1;
+
     protected static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
@@ -36,14 +38,12 @@ class OrganizationResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('country_id')
-                    ->relationship('country', 'short_name')
-                    ->required()
-                    ->label('Страна'),
                 TextInput::make('short_name')
                     ->maxLength(100)
                     ->required()
-                    ->label('Наименование'),
+                    ->label('Наименование')
+                    ->reactive()
+                    ->afterStateUpdated(fn ($state, callable $set) => $set('name', $state)),
                 TextInput::make('name')
                     ->maxLength(255)
                     ->label('Полное наименование'),
@@ -77,7 +77,7 @@ class OrganizationResource extends Resource
                 TextColumn::make('phone')
                     ->label('Телефон'),
                 TextColumn::make('address')
-                    ->label('Полный адрес'),
+                    ->label('Юридический адрес'),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),

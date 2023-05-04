@@ -5,6 +5,7 @@ namespace App\Filament\Resources\ActResource\Pages;
 use App\Filament\Resources\ActResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Tables\Actions\ReplicateAction;
 
 class ListActs extends ListRecords
 {

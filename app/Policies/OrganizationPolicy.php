@@ -18,7 +18,7 @@ class OrganizationPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->hasPermissionTo('просмотр всех: организация');
     }
 
     /**
@@ -30,7 +30,7 @@ class OrganizationPolicy
      */
     public function view(User $user, Organization $organization)
     {
-        return true;
+        return $user->hasPermissionTo('просмотр: организация');
     }
 
     /**
@@ -41,7 +41,7 @@ class OrganizationPolicy
      */
     public function create(User $user)
     {
-        return true;
+        return $user->hasPermissionTo('создание: организация');
     }
 
     /**
@@ -53,7 +53,7 @@ class OrganizationPolicy
      */
     public function update(User $user, Organization $organization)
     {
-        return true;
+        return $user->hasPermissionTo('изменение: организация');
     }
 
     /**
@@ -65,7 +65,7 @@ class OrganizationPolicy
      */
     public function delete(User $user, Organization $organization)
     {
-        return true;
+        return $user->hasPermissionTo('удаление: организация');
     }
 
     /**
@@ -77,7 +77,7 @@ class OrganizationPolicy
      */
     public function restore(User $user, Organization $organization)
     {
-        return true;
+        return $user->hasPermissionTo('восстановление: организация');
     }
 
     /**
@@ -89,6 +89,6 @@ class OrganizationPolicy
      */
     public function forceDelete(User $user, Organization $organization)
     {
-        return true;
+        return $user->hasPermissionTo('безвозвратное удаление: организация');
     }
 }

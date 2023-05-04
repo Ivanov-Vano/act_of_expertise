@@ -20,7 +20,7 @@ class Act extends Model
         'reason',
         'gross',
         'netto',
-        'measure',
+        'measure_id',
         'position',
         'contract',
         'invoice',
@@ -49,26 +49,39 @@ class Act extends Model
         return $this->belongsTo(TypeAct::class, 'type_act_id');
     }
 
+    public function measure():BelongsTo
+    {
+        return $this->belongsTo(Measure::class);
+    }
+
+    //заказчик
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Organization::class, 'customer_id');
     }
 
+    //экспортер
     public function exporter(): BelongsTo
     {
         return $this->belongsTo(Organization::class, 'exporter_id');
     }
+
+    //Грузоотправитель
     public function shipper(): BelongsTo
     {
         return $this->belongsTo(Organization::class, 'shipper_id');
     }
+
+    //Импортер
     public function importer(): BelongsTo
     {
-        return $this->belongsTo(Organization::class, 'importer_id');
+        return $this->belongsTo(Company::class, 'importer_id');
     }
+
+    //Грузополучатель
     public function consignee(): BelongsTo
     {
-        return $this->belongsTo(Organization::class, 'consignee_id');
+        return $this->belongsTo(Company::class, 'consignee_id');
     }
     public function products(): \Illuminate\Database\Eloquent\Relations\HasMany
     {

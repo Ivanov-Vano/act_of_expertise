@@ -16,10 +16,5 @@ class Organization extends Model
         'inn',
         'phone',
         'address',
-        'country_id'
     ];
-    public function country()
-    {
-        return $this->belongsTo(Country::class);
-    }
 }

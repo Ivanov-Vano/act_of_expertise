@@ -64,11 +64,6 @@ class ProductsRelationManager extends RelationManager
                     ->searchable()
                     ->columnSpanFull()
                     ->preload(),
-/*                    ->getSearchResultsUsing(fn (string $search) => CodeGroup::where('number', 'like', "%{$search}%")
-                        ->orderBy('id')
-                        ->limit(50)
-                        ->pluck('number', 'id'))
-                    ->getOptionLabelUsing(fn ($value): ?string => CodeGroup::find($value)?->number),*/
                 Select::make('manufacturer_id')
                     ->relationship('manufacturer', 'short_name')
                     ->required()
@@ -76,10 +71,6 @@ class ProductsRelationManager extends RelationManager
                     ->preload()
                     ->columnSpanFull()
                     ->createOptionForm([
-                        Select::make('country_id')
-                            ->relationship('country', 'short_name')
-                            ->required()
-                            ->label('Страна'),
                         TextInput::make('short_name')
                             ->maxLength(100)
                             ->required()
@@ -108,7 +99,6 @@ class ProductsRelationManager extends RelationManager
                     ->description('(в единицах измерения)')
                     ->schema([
                         TextInput::make('gross')
-                            ->required()
                             ->numeric()
                             ->mask(fn (TextInput\Mask $mask) => $mask
                                 ->numeric()
@@ -116,16 +106,24 @@ class ProductsRelationManager extends RelationManager
                             )
                             ->label('Брутто'),
                         TextInput::make('netto')
-                            ->required()
                             ->numeric()
                             ->mask(fn (TextInput\Mask $mask) => $mask
                                 ->numeric()
                                 ->decimalPlaces(2)
                             )
                             ->label('Нетто'),
-                        TextInput::make('measure')
-                            ->datalist(['кг', 'куб. м'])
-                            ->required()
+                        Select::make('measure_id')
+                            ->default('кг')
+                            ->relationship('measure', 'short_name')
+                            ->createOptionForm([
+                                TextInput::make('short_name')
+                                    ->maxLength(50)
+                                    ->required()
+                                    ->label('Наименование'),
+                                TextInput::make('name')
+                                    ->maxLength(255)
+                                    ->label('Полное наименование'),
+                            ])
                             ->label('Единица измерения'),
                         ]),
                         TextInput::make('description')

@@ -22,11 +22,13 @@ class TypeActResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
-    protected static ?string $modelLabel = 'тип';
+    protected static ?string $modelLabel = 'тип акта';
 
-    protected static ?string $pluralModelLabel = 'типы';
+    protected static ?string $pluralModelLabel = 'типы акта';
 
     protected static ?string $navigationGroup = 'Справочники';
+
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {

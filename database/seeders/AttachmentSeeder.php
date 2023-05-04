@@ -15,6 +15,10 @@ class AttachmentSeeder extends Seeder
      */
     public function run()
     {
+        $dir = "/var/www/html/storage/app/public/attachments"; // Например /var/www/localhost/public
+        if(!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
         Attachment::factory(50)->create();
     }
 }

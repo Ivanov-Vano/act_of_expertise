@@ -12,6 +12,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Actions\ReplicateAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\TextInput;
@@ -28,7 +29,13 @@ class ActResource extends Resource
 
     protected static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count();
+//        return static::getModel()::count();
+        $user = auth()->user();
+        if ($user->hasAnyRole(['Администратор', 'Суперпользователь'])) {
+            return static::getModel()::count();
+        }
+        return static::getEloquentQuery()
+            ->whereBelongsTo(auth()->user()->expert)->count();
     }
 
     protected static ?string $modelLabel = 'акт экспертизы';
@@ -57,10 +64,6 @@ class ActResource extends Resource
                     ->required()
                     ->type('date')
                     ->label('дата составления акта'),
-/*                DatePicker::make('date')
-                    ->required()
-                    ->displayFormat('d.m.Y')
-                    ->label('дата составления акта'),*/
                 TextInput::make('reason')
                     ->maxLength(255)
                     ->label('Основание для проведения экспертизы'),
@@ -69,10 +72,6 @@ class ActResource extends Resource
                     ->searchable()
                     ->preload()
                     ->createOptionForm([
-                        Select::make('country_id')
-                            ->relationship('country', 'short_name')
-                            ->required()
-                            ->label('Страна'),
                         TextInput::make('short_name')
                             ->maxLength(100)
                             ->required()
@@ -112,12 +111,22 @@ class ActResource extends Resource
                                 ->decimalPlaces(2)
                             )
                             ->label('Нетто'),
-                        TextInput::make('measure')
-                            ->datalist(['кг', 'куб. м'])
+                        Select::make('measure_id')
+                            ->default('кг')
+                            ->relationship('measure', 'short_name')
                             ->required()
+                            ->createOptionForm([
+                                TextInput::make('short_name')
+                                    ->maxLength(50)
+                                    ->required()
+                                    ->label('Наименование'),
+                                TextInput::make('name')
+                                    ->maxLength(255)
+                                    ->label('Полное наименование'),
+                            ])
                             ->label('Единица измерения'),
                         TextInput::make('position')
-                            ->label('Позиции'),
+                            ->label('Количество мест'),
                     ])
                 ->columns(3),
                 Section::make('Контракт и счет')
@@ -136,10 +145,6 @@ class ActResource extends Resource
                             ->searchable()
                             ->preload()
                             ->createOptionForm([
-                                Select::make('country_id')
-                                    ->relationship('country', 'short_name')
-                                    ->required()
-                                    ->label('Страна'),
                                 TextInput::make('short_name')
                                     ->maxLength(100)
                                     ->required()
@@ -158,6 +163,8 @@ class ActResource extends Resource
                                     ->maxLength(255)
                                     ->label('Юридический адрес'),
                             ])
+                            ->reactive()
+                            ->afterStateUpdated(fn ($state, callable $set) => $set('shipper_id', $state))
                             ->required()
                             ->label('Экспортер'),
                         Select::make('shipper_id')
@@ -166,10 +173,6 @@ class ActResource extends Resource
                             ->relationship('shipper', 'short_name')
                             ->required()
                             ->createOptionForm([
-                                Select::make('country_id')
-                                    ->relationship('country', 'short_name')
-                                    ->required()
-                                    ->label('Страна'),
                                 TextInput::make('short_name')
                                     ->maxLength(100)
                                     ->required()
@@ -206,17 +209,15 @@ class ActResource extends Resource
                                 TextInput::make('name')
                                     ->maxLength(255)
                                     ->label('Полное наименование'),
-                                TextInput::make('inn')
+                                TextInput::make('registration_number')
                                     ->maxLength(50)
-                                    ->label('ИНН'),
-                                TextInput::make('phone')
-                                    ->tel()
-                                    ->maxLength(50)
-                                    ->label('Телефон'),
+                                    ->label('Регистрационный номер'),
                                 TextInput::make('address')
                                     ->maxLength(255)
-                                    ->label('Юридический адрес'),
+                                    ->label('Адрес'),
                             ])
+                            ->reactive()
+                            ->afterStateUpdated(fn ($state, callable $set) => $set('consignee_id', $state))
                             ->label('Импортер'),
                         Select::make('consignee_id')
                             ->relationship('consignee', 'short_name')
@@ -234,16 +235,12 @@ class ActResource extends Resource
                                 TextInput::make('name')
                                     ->maxLength(255)
                                     ->label('Полное наименование'),
-                                TextInput::make('inn')
+                                TextInput::make('registration_number')
                                     ->maxLength(50)
-                                    ->label('ИНН'),
-                                TextInput::make('phone')
-                                    ->tel()
-                                    ->maxLength(50)
-                                    ->label('Телефон'),
+                                    ->label('Регистрационный номер'),
                                 TextInput::make('address')
                                     ->maxLength(255)
-                                    ->label('Юридический адрес'),
+                                    ->label('Адрес'),
                             ])
                             ->required()
                             ->label('Грузополучатель'),
@@ -269,27 +266,50 @@ class ActResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('expert.full_name')->label('Эксперт'),
-                TextColumn::make('number')->sortable()->label('Номер')
-                ->searchable(),
-                TextColumn::make('customer.short_name')->sortable()->label('Заказчик')
+                TextColumn::make('expert.full_name')
+                    ->sortable()
+                    ->searchable()
+                    ->toggleable()
+                    ->label('Эксперт'),
+                TextColumn::make('number')
+                    ->sortable()
+                    ->label('Номер')
+                    ->toggleable()
+                    ->searchable(),
+                TextColumn::make('customer.short_name')
+                    ->sortable()
+                    ->label('Заказчик')
+                    ->toggleable()
+                    ->searchable(),
+                TextColumn::make('exporter.short_name')
+                    ->sortable()
+                    ->label('Экспортер')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->searchable(),
+                TextColumn::make('importer.short_name')
+                    ->sortable()
+                    ->label('Импортер')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->searchable(),
                 TextColumn::make('date')
-//                    ->date()
                     ->date('d.m.Y')
                     ->sortable()
+                    ->toggleable()
                     ->label('Дата составления'),
                 TextColumn::make('created_at')
                     ->dateTime('d.m.Y H:i:s')
                     ->sortable()
+                    ->toggleable()
                     ->label('Создан'),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+//                Tables\Actions\ViewAction::make(),
+                ReplicateAction::make(),
                 Tables\Actions\EditAction::make(),
+
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -318,7 +338,15 @@ class ActResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
+        $user = auth()->user();
+        if ($user->hasAnyRole(['Администратор', 'Суперпользователь'])) {
+            return parent::getEloquentQuery()
+                ->withoutGlobalScopes([
+                    SoftDeletingScope::class,
+                ]);
+        }
         return parent::getEloquentQuery()
+            ->whereBelongsTo(auth()->user()->expert)
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);

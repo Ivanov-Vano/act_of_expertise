@@ -18,7 +18,6 @@ class OrganizationFactory extends Factory
     public function definition()
     {
         return [
-            'country_id' => Country::all()->random()->id,
             'short_name' => $this->faker->company,
             'name' => $this->faker->companySuffix,
             'inn' => $this->faker->numerify('##########'),
