@@ -54,6 +54,11 @@ class User extends Authenticatable implements FilamentUser, HasName
         return $this->belongsTo(Expert::class, 'expert_id')->withDefault();
     }
 
+    public function acts()
+    {
+        return $this->hasMany(Act::class);
+    }
+
     public function canAccessFilament(): bool
     {
         return true;

@@ -32,6 +32,7 @@ class Act extends Model
         'package',
         'description',
         'transport_id',
+        'user_id',
     ];
 
     public function expert():BelongsTo
@@ -91,4 +92,10 @@ class Act extends Model
     {
         return $this->hasMany(Attachment::class);
     }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }
