@@ -14,7 +14,7 @@ class ActObserver
      */
     public function created(Act $act)
     {
-        $act->user()->associate(auth()->user());
+        $act->user()->associate(auth()->user());//todo: не работает
     }
 
     /**
@@ -25,7 +25,7 @@ class ActObserver
      */
     public function updated(Act $act)
     {
-        $act->user()->associate(auth()->user());
+ //
 
     }
 

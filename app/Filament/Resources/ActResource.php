@@ -301,6 +301,10 @@ class ActResource extends Resource
                     ->sortable()
                     ->toggleable()
                     ->label('Создан'),
+                TextColumn::make('user.username')
+                    ->sortable()
+                    ->toggleable()
+                    ->label('Пользователь'),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
