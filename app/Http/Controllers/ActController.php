@@ -130,7 +130,7 @@ class ActController extends Controller
 
         $templateProcessor->cloneBlock('block_product_main', 0, true, false, $products);
 
-        $templateProcessor->setValue('measure', $act->measure);
+        $templateProcessor->setValue('measure', $act->measure->short_name);
         $templateProcessor->setValue('gross', $act->gross);
         $templateProcessor->setValue('netto', $act->netto);
 
