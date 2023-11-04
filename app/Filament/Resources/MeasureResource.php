@@ -19,7 +19,7 @@ class MeasureResource extends Resource
 {
     protected static ?string $model = Measure::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-swatch';
+    protected static ?string $navigationIcon = 'heroicon-o-sparkles';
 
     protected static ?string $modelLabel = 'единица измерения';
 

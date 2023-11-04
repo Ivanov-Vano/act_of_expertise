@@ -18,7 +18,8 @@ class MeasurePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('просмотр всех: единица измерения');
+        return true;
+        //return $user->hasPermissionTo('просмотр всех: единица измерения');
     }
 
     /**

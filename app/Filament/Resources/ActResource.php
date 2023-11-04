@@ -339,6 +339,7 @@ class ActResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         $user = auth()->user();
+
         if ($user->hasAnyRole(['Администратор', 'Суперпользователь'])) {
             return parent::getEloquentQuery()
                 ->withoutGlobalScopes([
